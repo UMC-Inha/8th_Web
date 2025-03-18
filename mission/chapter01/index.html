@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TODO</title>
+    <link rel="stylesheet" href="src/style.css" />
+  </head>
+
+  <body>
+    <div class="todoApp">
+      <h1>Deogi TODO</h1>
+      <div class="inputContainer">
+        <input type="text" id="taskInput" placeholder="할 일 입력" />
+        <button id="addBtn">할 일 추가</button>
+      </div>
+      <div class="taskContainer">
+        <div class="todoList">
+          <h2>할 일</h2>
+          <ul id="todoList"></ul>
+        </div>
+        <div class="completedList">
+          <h2>완료</h2>
+          <ul id="completedList"></ul>
+        </div>
+      </div>
+    </div>
+    <script src="dist/index.js"></script>
+  </body>
+</html>
