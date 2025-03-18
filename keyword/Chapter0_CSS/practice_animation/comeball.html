@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CSS</title>
+  <style>
+    .container{
+      width: 100vw;
+      height: 100vh;      
+    }
+    @keyframes down-up {
+      0% {
+        
+      }
+      50% {
+        transform: translate(500px,400px) skew(90deg,90deg);
+        background-color: rgb(255, 0, 0);
+
+      }
+      100% {
+        transform: translate(500px,100px);
+      }
+     
+    }   
+    .item {
+      margin: 0;
+      padding: 0;
+      width: 60px; 
+      height: 60px;
+      border-radius: 100%;
+      background-color: rgb(255, 249, 70);
+      transform: translate(500px,100px);
+      animation: 3s ease-in 1s infinite down-up;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+        <div class="item">
+        </div>    
+  </div>
+</body>
+
+</html>
