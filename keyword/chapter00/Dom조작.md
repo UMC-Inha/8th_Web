@@ -84,5 +84,7 @@
   document.body.appendChild(newButton);
   ```
 - 태그 복제하기
-  cloneNode() 를 이용해 복제
-  ** 코드 정리 필요 **
+  - 기존의 HTML 요소를 복사하여 새로운 요소를 만드는 것을 의미
+  - cloneNode() 를 이용하며 true 또는 false값을 인자로 받음.
+    - true : 복제하려는 요소와 그 자식 요소까지 모두 복제
+    - false: 복제하려는 요소만 복제하고 자식 요소는 복제 x
