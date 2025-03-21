@@ -33,9 +33,65 @@ let bigNum2 = BigInt("123456789012345678901234567890");
 
 **🔗 출처:** [MDN BigInt](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt)
 
+## 2. 객체 자료형 중 Array 메서드
+
+| 메서드    | 설명                                                 | 출처                                                                                                          |
+| --------- | ---------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
+| `sort`    | 배열을 정렬 (기본적으로 문자열 정렬)                 | [MDN sort](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort)       |
+| `join`    | 배열의 모든 요소를 문자열로 변환하여 반환            | [MDN join](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/join)       |
+| `reverse` | 배열의 요소 순서를 반대로 변경                       | [MDN reverse](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reverse) |
+| `splice`  | 배열의 요소를 추가, 제거 또는 변경                   | [MDN splice](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/splice)   |
+| `slice`   | 배열의 일부를 얕은 복사하여 반환                     | [MDN slice](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/slice)     |
+| `find`    | 조건을 만족하는 첫 번째 요소 반환                    | [MDN find](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find)       |
+| `filter`  | 조건을 만족하는 요소들만 필터링하여 새 배열 반환     | [MDN filter](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter)   |
+| `map`     | 배열의 모든 요소에 대해 함수를 적용하여 새 배열 반환 | [MDN map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map)         |
+| `reduce`  | 배열의 요소들을 누적하여 하나의 값 반환              | [MDN reduce](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce)   |
+| `some`    | 배열의 요소 중 하나 이상이 조건을 만족하는지 확인    | [MDN some](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/some)       |
+| `every`   | 배열의 모든 요소가 조건을 만족하는지 확인            | [MDN every](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/every)     |
+| `forEach` | 배열의 각 요소에 대해 주어진 함수를 실행             | [MDN forEach](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach) |
+
 ---
 
-## 2. 연산자
+## 3. Hoisting (호이스팅)
+
+Hoisting(호이스팅)은 JavaScript 엔진이 코드를 실행하기 전에 **함수, 변수, 클래스의 선언을 해당 범위의 최상단으로 이동하는 과정**을 의미합니다.
+
+### **변수 호이스팅**
+
+- `var` 변수는 선언만 먼저 올라가고, 할당은 원래 위치에서 이루어집니다.
+- 따라서 `undefined` 값을 갖습니다.
+
+```javascript
+console.log(x); // undefined
+var x = 10; // 선언이 코드 최상단으로 올라감
+```
+
+### **함수 호이스팅**
+
+- 함수 선언문은 전체가 끌어올려지므로 선언 이전에도 호출할 수 있습니다.
+
+```javascript
+console.log(square(5)); // 정상 실행
+
+function square(n) {
+  return n * n;
+}
+```
+
+### **클래스 호이스팅 불가**
+
+- `class`는 `hoisting`이 적용되지 않습니다.
+
+```javascript
+console.log(new MyClass()); // ReferenceError 발생
+class MyClass {}
+```
+
+**🔗 출처:** [MDN Hoisting](https://developer.mozilla.org/en-US/docs/Glossary/Hoisting)
+
+---
+
+## 4. 연산자
 
 ### 📌 기본 연산자
 
@@ -135,7 +191,7 @@ let bigNum2 = BigInt("123456789012345678901234567890");
 
 ---
 
-## 3. Dom 조작
+## 5. Dom 조작
 
 ### 📌 태그 가져오기
 
