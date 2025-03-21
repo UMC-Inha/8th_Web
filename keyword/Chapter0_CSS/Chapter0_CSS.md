@@ -4,6 +4,7 @@
 
 ✅ `border`: 요소의 **박스 모델 내부**에 포함됨 (요소 크기에 영향을 줌)  
 ✅ `outline`: 요소의 **박스 모델 외부**에 그려지며, 요소 크기에 영향을 주지 않음
+=> 다 완성하고 주변 요소들들에게 영향 주지 않고 강조하고 싶을 때 주로 사용
 
 | 속성      | 요소 크기 포함 여부 | 위치      | 적용 대상                                    |
 | --------- | ------------------- | --------- | -------------------------------------------- |
@@ -26,40 +27,53 @@
 
 ---
 
+## 🍠 CSS Transform 속성 정리
+
+| 속성        | 설명                                                     | 출처                                                                                           |
+| ----------- | -------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
+| `translate` | 요소를 x, y (또는 z)축을 따라 이동합니다.                | [MDN translate](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/translate) |
+| `scale`     | 요소의 크기를 확대 또는 축소합니다.                      | [MDN scale](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/scale)         |
+| `rotate`    | 요소를 특정 각도만큼 회전합니다.                         | [MDN rotate](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/rotate)       |
+| `skew`      | 요소를 지정된 각도로 기울입니다.                         | [MDN skew](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/skew)           |
+| `matrix`    | 2D 변형을 하나의 행렬로 표현하여 복합 변형을 적용합니다. | [MDN matrix](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/matrix)       |
+
+---
+
 ## 🚀 **CSS Transition 관련 속성**
 
-| 속성                         | 설명                                 | 출처                                                                               |
-| ---------------------------- | ------------------------------------ | ---------------------------------------------------------------------------------- |
-| `transition-property`        | 전환 효과를 줄 속성 지정             | [MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/transition-property)        |
-| `transition-duration`        | 애니메이션이 완료되는 시간 설정      | [MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/transition-duration)        |
-| `transition-timing-function` | 전환 효과의 가속 곡선 설정           | [MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/transition-timing-function) |
-| `transition-delay`           | 애니메이션 시작 전 대기 시간 지정    | [MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/transition-delay)           |
-| `transition-behavior`        | 개별 속성에 대한 전환 적용 여부 지정 | [MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/transition-behavior)        |
+| 속성                         | 설명                                 | 출처                                                                                                            |
+| ---------------------------- | ------------------------------------ | --------------------------------------------------------------------------------------------------------------- |
+| `transition-property`        | 전환 효과를 줄 속성 지정             | [MDN - transition-property](https://developer.mozilla.org/en-US/docs/Web/CSS/transition-property)               |
+| `transition-duration`        | 애니메이션이 완료되는 시간 설정      | [MDN - transition-duration](https://developer.mozilla.org/en-US/docs/Web/CSS/transition-duration)               |
+| `transition-timing-function` | 전환 효과의 가속 곡선 설정           | [MDN - transition-timing-function](https://developer.mozilla.org/en-US/docs/Web/CSS/transition-timing-function) |
+| `transition-delay`           | 애니메이션 시작 전 대기 시간 지정    | [MDN - transition-delay](https://developer.mozilla.org/en-US/docs/Web/CSS/transition-delay)                     |
+| `transition-behavior`        | 개별 속성에 대한 전환 적용 여부 지정 | [MDN - transition-behavior](https://developer.mozilla.org/en-US/docs/Web/CSS/transition-behavior)               |
 
 ---
 
 ## 🎬 **CSS Animation 관련 속성**
 
-| 속성                        | 설명                                  | 출처                                                                              |
-| --------------------------- | ------------------------------------- | --------------------------------------------------------------------------------- |
-| `animation-name`            | 애니메이션 키프레임 이름 설정         | [MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/animation-name)            |
-| `animation-duration`        | 애니메이션 한 사이클의 지속 시간      | [MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/animation-duration)        |
-| `animation-delay`           | 애니메이션 시작 전 대기 시간          | [MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/animation-delay)           |
-| `animation-direction`       | 애니메이션 반복 방향 설정             | [MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/animation-direction)       |
-| `animation-iteration-count` | 애니메이션 반복 횟수                  | [MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/animation-iteration-count) |
-| `animation-play-state`      | 애니메이션 일시정지 여부              | [MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/animation-play-state)      |
-| `animation-timing-function` | 키프레임 전환 속도 설정               | [MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/animation-timing-function) |
-| `animation-fill-mode`       | 애니메이션 시작 전후 스타일 유지 여부 | [MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/animation-fill-mode)       |
-| `@keyframes`                | 애니메이션의 키프레임 설정            | [MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/@keyframes)                |
+| 속성                        | 설명                                  | 출처                                                                                                          |
+| --------------------------- | ------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
+| `animation-name`            | 애니메이션 키프레임 이름 설정         | [MDN - animation-name](https://developer.mozilla.org/en-US/docs/Web/CSS/animation-name)                       |
+| `animation-duration`        | 애니메이션 한 사이클의 지속 시간      | [MDN - animation-duration](https://developer.mozilla.org/en-US/docs/Web/CSS/animation-duration)               |
+| `animation-delay`           | 애니메이션 시작 전 대기 시간          | [MDN - animation-delay](https://developer.mozilla.org/en-US/docs/Web/CSS/animation-delay)                     |
+| `animation-direction`       | 애니메이션 반복 방향 설정             | [MDN - animation-direction](https://developer.mozilla.org/en-US/docs/Web/CSS/animation-direction)             |
+| `animation-iteration-count` | 애니메이션 반복 횟수                  | [MDN - animation-iteration-count](https://developer.mozilla.org/en-US/docs/Web/CSS/animation-iteration-count) |
+| `animation-play-state`      | 애니메이션 일시정지 여부              | [MDN - animation-play-state](https://developer.mozilla.org/en-US/docs/Web/CSS/animation-play-state)           |
+| `animation-timing-function` | 키프레임 전환 속도 설정               | [MDN - animation-timing-function](https://developer.mozilla.org/en-US/docs/Web/CSS/animation-timing-function) |
+| `animation-fill-mode`       | 애니메이션 시작 전후 스타일 유지 여부 | [MDN - animation-fill-mode](https://developer.mozilla.org/en-US/docs/Web/CSS/animation-fill-mode)             |
+| `@keyframes`                | 애니메이션의 키프레임 설정            | [MDN - @keyframes](https://developer.mozilla.org/en-US/docs/Web/CSS/@keyframes)                               |
 
 ---
 
 💡 **애니메이션 축약형 `animation` 예시**
-/_ @keyframes duration | easing-function | delay |
-iteration-count | direction | fill-mode | play-state | name _/
 
 ```css
+/* @keyframes duration | easing-function | delay |
+iteration-count | direction | fill-mode | play-state | name */
+
 animation: 3s ease-in 1s 2 reverse both paused slide-in;
 ```
 
-[MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_animations/Using_CSS_animations)
+📚 출처: [MDN - Using CSS animations](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_animations/Using_CSS_animations)
