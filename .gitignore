@@ -1,0 +1,25 @@
+# node_modules, dist, build 폴더 무시
+**/node_modules/
+**/dist/
+**/build/
+
+# TypeScript 컴파일 파일 무시
+**/*.js
+**/*.js.map
+
+# 환경 변수 파일
+**/.env
+**/.env.*
+
+# 에디터 설정 무시
+**/.vscode/
+**/.DS_Store
+**/.idea/
+
+# 로그 파일
+**/*.log
+
+# 패키지 매니저 lock 파일 (팀 규칙에 따라)
+**/package-lock.json
+**/yarn.lock
+**/pnpm-lock.yaml
