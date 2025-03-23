@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grid Layout</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        .container {
+            display: grid;
+            grid-template-columns: 1.5fr 1.5fr;
+            grid-template-rows: 0.5fr 2fr 2fr 0.8fr;
+            grid-template-areas:
+                "header menu"
+                "hero hero"
+                "main blank"
+                "banner banner";
+            height: 100vh;
+            gap: 0;
+        }
+        .header { grid-area: header; background: #12172d; color: white; display: flex; align-items: center; justify-content: center; }
+        .menu { grid-area: menu; background: #e44040; color: white; display: flex; align-items: center; justify-content: center; }
+        .hero { grid-area: hero; background: #4a7ebb; color: white; display: flex; align-items: center; justify-content: center; }
+        .main { grid-area: main; background: #0b0b52; color: white; display: flex; align-items: center; justify-content: center; }
+        .blank {
+            grid-area: blank;
+            display: grid;
+            grid-template-rows: 1fr 1fr;
+            grid-template-columns: 1fr;
+            justify-content: start;
+            padding-left: 200px;
+            background: white;
+        }
+        .image { background: #c6e5ed; display: flex; align-items: center; justify-content: center; }
+        .extra { background: #5aaf80; display: flex; align-items: center; justify-content: center; }
+        .banner { grid-area: banner; background: #e0b24d; display: flex; align-items: center; justify-content: center; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">HEADER</div>
+        <div class="menu">MENU</div>
+        <div class="hero">HERO</div>
+        <div class="main">MAIN</div>
+        <div class="blank">
+            <div class="image">IMAGE</div>
+            <div class="extra">EXTRA</div>
+        </div>
+        <div class="banner">BANNER</div>
+    </div>
+</body>
+</html>
