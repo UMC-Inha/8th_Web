@@ -1,0 +1,5 @@
+- Element Level과 Container Level은 무엇을 의미하며, 어떤 것이 다른지 정리해주세요.
+  - Element Level: 개별 요소 자체에 적용되는 속성
+    - Ex) `text-align`: 텍스트를 정렬할 때 사용
+  - Container Level: 부모 컨테이너 내에서 자식 요소를 배치할 때 사용
+    - Ex) `margin: auto`: 블록 요소를 부모 안에서 가운데 정렬

@@ -1,0 +1,24 @@
+.box {
+  width: 100px;
+  height: 100px;
+  background-color: #ff6347;
+  position: absolute;
+  top: 50%;
+  left: 0;
+
+  animation: moveBox 3s ease-in-out 1s infinite alternate forwards;
+}
+
+@keyframes moveBox {
+  0% {
+    left: 10%;
+    background-color: #ff6347;
+  }
+  50% {
+    background-color: #fff1a2;
+  }
+  100% {
+    left: 90%;
+    background-color: #75baff;
+  }
+}
