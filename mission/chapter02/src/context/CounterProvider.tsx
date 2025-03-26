@@ -1,0 +1,34 @@
+import { createContext, useContext, useState, ReactNode } from "react";
+
+interface CounterContextType {
+  count: number;
+  handleIncrement: () => void;
+  handleDecrement: () => void;
+}
+
+export const CounterContext = createContext<CounterContextType | undefined>(
+  undefined
+);
+
+export const CounterProvider = ({ children }: { children: ReactNode }) => {
+  const [count, setCount] = useState(0);
+
+  const handleIncrement = () => setCount((prev) => prev + 1);
+  const handleDecrement = () => setCount((prev) => prev - 1);
+
+  return (
+    <CounterContext.Provider
+      value={{ count, handleIncrement, handleDecrement }}
+    >
+      {children}
+    </CounterContext.Provider>
+  );
+};
+
+export const useCount = () => {
+  const context = useContext(CounterContext);
+  if (!context) {
+    throw new Error("CountProvider 없이 useCount는 사용 불가");
+  }
+  return context;
+};
