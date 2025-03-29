@@ -1,0 +1,125 @@
+* { /* 기본세팅*/
+    margin: 0;
+    border: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f1f1f1;
+}
+
+.todo-container {
+    background: white;
+    padding: 20px; /* 내용과 테두리 사이 여백*/
+    border-radius: 12px; /*가장자리 동그리*/
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1); /*테두리그림자속성*/
+    width: 350px;
+    text-align: center;
+}
+
+.todo-container__header {
+    font-size: 24px;
+    margin-bottom: 16px; /*간격*/
+}
+
+.todo-container__form {
+    display: flex;
+    gap: 10px; /*할일 입력과 할일 추가 사이*/
+    margin-bottom: 20px;
+}
+
+.todo-container__input {
+    flex: 1; /*박스를 꽉차지함*/
+    padding: 8px; /*가로간격*/
+    border: 1px solid #ccc; /*테두리선*/
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+.todo-container__button {
+    background-color: #28a845;
+    color: white;
+    padding: 8px 12px; /*상하 좌우 간격*/
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /*커서 갖다대면 이속도로 변*/
+}
+
+.todo-container__button:hover {
+    background-color: #218838; /*버튼에 커서 갖다댈때 색변함*/
+}
+
+.render-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.render-container__title {
+    font-size: 18px;
+    margin-bottom: 10px;
+    gap: 20px;
+
+    display: flex;
+    flex-direction: row; /*기본값*/
+    justify-content: center;
+}
+
+.render-container__section {
+    width: 100%;
+    text-align: left;
+}
+
+.render-container__title {
+    font-size: 18px;
+    margin-bottom: 10px;
+
+    display: flex;
+    justify-content: center;
+}
+
+.render-container__list {
+    /*ul이라 기본적으로 *이 찍히는데 이 작업을 통해 없애줌*/
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+
+}
+
+.render-container__item {
+    display: flex;
+    justify-content: space-between;
+
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+    background-color: #f9f9f9;
+    border-radius: 6px;
+    margin-bottom: 6px;
+    width: 100%;
+}
+
+.render-container__item-text {
+    flex: 1;
+}
+
+.render-container__item-button {
+    background-color: #28a845;
+    color: white;
+    padding: 6px 10px; /*가로 세로 간격*/
+    border: none;
+    border-radius: 6px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.render-container__item-button:hover {
+    background-color: #218838;
+}
