@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, ReactNode } from "react";
+import { createContext, useContext, useState, PropsWithChildren } from "react";
 
 //전역상태로 아래 todos, ... 등을 관리함
 // =>  useTodoContext()로 필요한 데이터에 언제든 접근 가능
@@ -12,11 +12,7 @@ interface TodoContextType {
 
 const TodoContext = createContext<TodoContextType | undefined>(undefined);
 
-//ReactNode 안쓰면 에러
-//PropsWithChildren 사용하는 것이 좋다.
-export const TodoProvider: React.FC<{ children: ReactNode }> = ({
-  children,
-}) => {
+export const TodoProvider = ({ children }: PropsWithChildren<{}>) => {
   const [todos, setTodos] = useState<{ id: number; text: string }[]>([]);
   const [doneTasks, setDoneTasks] = useState<{ id: number; text: string }[]>(
     []
