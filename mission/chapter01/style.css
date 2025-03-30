@@ -1,0 +1,122 @@
+* {
+    margin : 0;
+    padding: 0;
+    box-sizing : border-box;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: plum;
+}
+
+.todo-container {
+    background-color: white;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
+    width: 350px;
+    text-align: center;
+}
+
+.todo-container__header {
+    font-size: 25px;
+    margin-bottom: 20px;
+}
+
+.todo-container__form {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.todo-container__input {
+    flex: 1;
+    padding: 8px;
+    border: 3px solid #ccc;
+    border-radius: 5px;
+    font-size: 15px;
+}
+
+.todo-container__button {
+    background-color: blueviolet;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.todo-container__button:hover {
+    background-color: rgb(86, 23, 146);
+}
+
+.render-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.render-container__title {
+    font-size: 15px;
+    margin-bottom: 10px;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.render-container__section {
+    width: 100%;
+    text-align: left;
+}
+
+.render-container__title {
+    font-size: 15px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: center;
+}
+
+.render-container__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.render-container__item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+    background-color: white;
+    border-radius: 5px;
+    margin-bottom: 5px;
+    width: 100%;
+}
+
+.render-container__item-text {
+    flex: 1;
+}
+
+.render-container__item-button {
+    background-color: rgb(210, 0, 0);
+    color: white;
+    border: none;
+    padding: 6px 10px;
+    border-radius: 5px;
+
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.render-container__item-button:hover {
+    background-color: rgb(157, 0, 0);
+}

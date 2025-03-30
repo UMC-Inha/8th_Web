@@ -1,0 +1,54 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.navVar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: white;
+    color: white;
+}
+
+.logo-image {
+    height: 30px; 
+    width: auto;
+}
+  
+.logo {
+    font-size: 15px;
+    font-weight: bold;
+    color: black;
+    position: absolute;
+    margin: 50px;
+    
+}
+
+.button-list {
+    display: flex;
+    gap: 20px
+}
+
+.nav-button {
+    background-color: white;
+    border: 0px;
+}
+
+.nav-button a {
+    text-decoration: none;
+    color: black;
+    padding: 8px, 16px;
+    font-size: 15px;
+    transition: color 0.3s;
+    margin: auto;
+}
+  
+.nav-links a:hover {
+    color: gray;
+}
+  
+.circle {
+    display: flex;
+}

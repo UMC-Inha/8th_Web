@@ -1,0 +1,96 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body, html {
+    width: 100%;
+    height: 100%;
+    font-family: Arial, sans-serif;
+    }
+
+    .container {
+        display: grid;
+        grid-template-areas: 
+        'header menu menu menu menu menu'
+        'hero hero hero hero hero hero'
+        'main main empty empty image image'
+        'main main empty empty extra extra'
+        'banner banner banner banner banner banner';
+        grid-template-columns: 1fr 0.5fr 0.5fr 0.25fr 0.25fr 0.5fr;
+        grid-template-rows: 60px 300px 250px 250px 100px;
+        height: 100vh;
+}
+
+.header {
+    grid-area: header; 
+    background-color: navy; 
+    color: white; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+}
+
+.menu {
+    grid-area: menu; 
+    background-color: palevioletred; 
+    color: white; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+}
+
+.hero {
+    grid-area: hero; 
+    background-color: skyblue; 
+    color: white; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+}
+
+.empty {
+    grid-area: empty; 
+    background-color: white; 
+    color: black; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+}
+
+.main {
+    grid-area: main; 
+    background-color: navy; 
+    color: white; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+}
+
+.image {
+    grid-area: image; 
+    background-color: salmon; 
+    color: black; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+}
+
+.extra {
+    grid-area: extra; 
+    background-color: greenyellow; 
+    color: black; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+}
+
+.banner {
+    grid-area: banner; 
+    background-color: burlywood; 
+    color: black; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+}
