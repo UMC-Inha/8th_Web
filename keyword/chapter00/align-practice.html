@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CSS Practice: text-align, margin, flex, translate, grid</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f2f2f2;
+      margin: 0;
+      padding: 20px;
+    }
+    h2 {
+      margin-top: 40px;
+    }
+
+    .text-align {
+      border: 2px solid #333;
+      padding: 20px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .margin {
+      border: 2px dashed #0077cc;
+      width: 300px;
+      padding: 20px;
+      margin: 20px auto;
+      text-align: center;
+    }
+
+    .flex {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      background: #e0e0e0;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    .item {
+      background: #0a14a2;
+      color: white;
+      padding: 20px;
+      margin: 10px;
+    }
+
+    .translate {
+      position: relative;
+      border: 2px solid #333;
+      height: 150px;
+      margin-bottom: 20px;
+      overflow: hidden;
+    }
+
+    .trans-item {
+      position: absolute;
+      background: #ff5959;
+      color: white;
+      top: 50%;
+      left: 50%;
+      transform: translate3d(-50%, -50%, 0);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 20px;
+      place-items: center;
+    }
+    .grid-demo .grid-item {
+      background: #3eb7fd;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h2>Text Align</h2>
+  <div class="text-align">중앙 정렬</div>
+
+  <h2>Margin</h2>
+  <div class="margin">마진 중앙 정렬</div>
+
+  <h2>Flex</h2>
+  <div class="flex">
+    <div class="item">Flex 중앙 정렬</div>
+  </div>
+
+  <h2>Translate</h2>
+  <div class="translate">
+    <div class="trans-item">Translate 중앙 정렬</div>
+  </div>
+
+  <h2>Grid</h2>
+  <div class="grid">
+    <div class="grid-item"></div>
+    <div class="grid-item">Grid 중앙 정렬</div>
+    <div class="grid-item"></div>
+  </div>
+</body>
+</html>

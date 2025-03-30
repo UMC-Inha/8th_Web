@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Navbar</title>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0"
+        rel="stylesheet" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .navbar {
+            background-color: #1f1f1f;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 25px 25px;
+            color: #ffffff;
+        }
+
+        .logo {
+            font-size: 16px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .logo img {
+            width: 40px;
+            height: auto;
+            margin-right: 10px;
+        }
+
+        .menu {
+            display: flex;
+            align-items: center;
+            gap: 35px;
+        }
+
+        .menu a {
+            font-size: 16px;
+            text-decoration: none;
+            color: white;
+        }
+        .material-symbols-outlined {
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <img src="smumc-logo.webp" alt="Logo" />SMUMC</div>
+        <div class="menu">
+            <a href="#">PROJECTS</a>
+            <a href="#">MEMBERS</a>
+            <a href="#">NOTICE</a>
+            <span class="material-symbols-outlined">dark_mode</span>
+        </div>
+    </nav>
+</body>
+
+</html>

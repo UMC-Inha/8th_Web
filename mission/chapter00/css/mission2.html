@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS Mission2 - Centered Text</title>
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      grid-template-areas:
+        "top"
+        "main"
+        "bottom";
+      font-family: Arial, sans-serif;
+      background-color: #fafafa;
+      color: #333;
+      font-size: 20px;
+    }
+    #top {
+      grid-area: top;
+      display: flex;
+      flex-direction: row;
+      background-color: #f2f2f2;
+      margin: 0;
+      padding: 0;
+      align-items: center;
+      justify-content: center;
+    }
+    header {
+      width: 25%;
+      background-color: rgb(0, 0, 0);
+      color: white;
+      font-size: 1em;
+      padding: 20px;
+      box-sizing: border-box;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    nav {
+      width: 75%;
+      background-color: #ff5959;
+      color: #fff;
+      padding: 20px;
+      box-sizing: border-box;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    /* 메인 영역 */
+    #main-container {
+      grid-area: main;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      margin: 0;
+      padding: 0;
+    }
+    #main1 {
+      background-color: #3eb7fd;
+      height: 50%;
+      color: white;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #main2 {
+      height: 50%;
+      display: grid;
+      grid-template-columns: 50% 50%;
+      gap: 0;
+      margin: 0;
+      padding: 0;
+    }
+    #left-article {
+      height: 100%;
+      color: white;
+      background-color: #00103c;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #right-article {
+      display: flex;
+      height: 100%;
+      background-color: white;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    #article-content1 {
+      height: 100%;
+      width: 50%;
+      background-color: white;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #article-content2 {
+      display: grid;
+      grid-template-rows: 50% 50%;
+      height: 100%;
+      width: 50%;
+      gap: 0;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    #image, #extra {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    #image {
+      background-color: rgb(208, 255, 248);
+    }
+    #extra {
+      background-color: rgb(85, 199, 117);
+    }
+    #bottom {
+      grid-area: bottom;
+      background-color: #ffe596;
+      padding: 20px;
+      margin: 0;
+      box-sizing: border-box;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    footer {
+      font-size: 1.2em;
+    }
+  </style>
+</head>
+<body>
+  <div id="top">
+    <header>HEADER</header>
+    <nav>MENU</nav>
+  </div>
+  <div id="main-container">
+    <section id="main1">HERO</section>
+    <section id="main2">
+      <article id="left-article">
+        <span>MAIN</span>
+      </article>
+      <article id="right-article">
+        <div id="article-content1"></div>
+        <div id="article-content2">
+          <div id="image">IMAGE</div>
+          <div id="extra">EXTRA</div>
+        </div>
+      </article>
+    </section>
+  </div>
+  <div id="bottom">
+    <footer>BANNER</footer>
+  </div>
+</body>
+</html>

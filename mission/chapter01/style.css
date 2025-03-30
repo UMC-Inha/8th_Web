@@ -1,0 +1,96 @@
+html, body {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+    background-color: #dadada; 
+    margin: 0;
+}
+
+body {
+    width: 350px;
+    height: auto;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* 그림자 효과 (선택) */
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#search {
+    display: flex;
+    width: 100%;
+}
+
+#todo-input {
+    width: 73%;
+    border: 1px solid #bbbbbb; /* 녹색 테두리, 두께 2px */
+    border-radius: 5px;       /* 모서리를 둥글게 */
+    padding: 5px; 
+}
+
+#main-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between; /* 요소들이 좌우 끝에 배치됨 */
+    width: 100%;
+    max-width: 350px; /* 최대 크기 지정 */
+    gap: 0;
+    padding: 10px;
+}
+/* flex 가로/세로 정렬 */
+/* section Tag 내부에 div tag 2개를 배치했더니, 공백이 생기는 현상 */
+
+.main-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 50%;
+}
+
+#todo-container, #complete-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: auto;
+    
+}
+.todo-box, .complete-box {
+    width : 160px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    background-color: rgb(240, 240, 240);
+    padding: 5px 3px 5px 3px;
+    margin-bottom:7px;
+    border-radius: 5px;
+    box-shadow: -0.5px 0.5px 2px 0.3px #a9a9a9
+}
+/* margin : top right bottom left */
+/* box-shadow : 좌,우 구분 / 상,하 구분 / 블러 수준, 클수록 더  흐려짐 / 그림자 크기, 클수록 그림자 커짐*/
+
+.delete-btn {
+    margin-left: 10px;
+    padding: 5px 10px 5px 10px;
+    background-color: rgb(255, 70, 70);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+#todo-add-btn, .complete-btn {
+    margin-left: 10px;
+    padding: 5px 10px 5px 10px;
+    background-color: rgb(24, 160, 24);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 12px;
+}

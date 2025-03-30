@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Display 속성 비교</title>
+  <style>
+    /* 공통 스타일: 각 요소의 배경, 테두리, 텍스트 중앙 정렬 */
+    .box {
+      background-color: #4CAF50;
+      color: white;
+      border: 2px solid #333;
+      padding: 10px;
+      margin: 5px;
+      text-align: center;
+    }
+    .block {
+      display: block;
+      width: 200px; /* block 요소는 width와 height를 지정할 수 있음 */
+    }
+    .inline {
+      display: inline;
+      /* width와 height 지정은 무시됨 */
+    }
+    .inline-block {
+      display: inline-block;
+      width: 200px; /* 지정 가능 */
+    }
+    .container {
+      border: 2px dashed #aaa;
+      padding: 10px;
+      margin-bottom: 20px;
+    }
+    .container h2 {
+      margin: 0 0 10px 0;
+      font-size: 1.1em;
+    }
+  </style>
+</head>
+<body>
+  <!-- Block 요소 예제 -->
+  <div class="container">
+    <h2>Block 요소</h2>
+    <div class="box block">Block Element 1</div>
+    <div class="box block">Block Element 2</div>
+    <div class="box block">Block Element 3</div>
+    <p>Block 요소는 기본적으로 새로운 줄에서 시작하며, 전체 너비 차지</p>
+  </div>
+
+  <!-- Inline 요소 예제 -->
+  <div class="container">
+    <h2>Inline 요소</h2>
+    <span class="box inline">Inline Element 1</span>
+    <span class="box inline">Inline Element 2</span>
+    <span class="box inline">Inline Element 3</span>
+    <p>Inline 요소는 한 줄에 배치되며, width와 height를 지정해도 무시</p>
+  </div>
+
+  <!-- Inline-block 요소 예제 -->
+  <div class="container">
+    <h2>Inline-block 요소</h2>
+    <div class="box inline-block">Inline-block Element 1</div>
+    <div class="box inline-block">Inline-block Element 2</div>
+    <div class="box inline-block">Inline-block Element 3</div>
+    <p>Inline-block 요소는 한 줄에 배치 가능 & width, height, 여백 등 블록 특성 지님</p>
+  </div>
+</body>
+</html>

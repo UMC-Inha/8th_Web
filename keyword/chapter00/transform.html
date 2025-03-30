@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CSS Transform</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #f2f2f2;
+      padding: 20px;
+    }
+    h2 {
+      margin-bottom: 20px;
+    }
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    .box {
+      width: 100px;
+      height: 100px;
+      background-color: #4CAF50;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid #333;
+    }
+    .translate {
+      transform: translate(50px, 20px);
+    }
+    .scale {
+      transform: scale(1.5);
+        margin-top: 160px;
+    }
+    .rotate {
+      transform: rotate(45deg);
+    }
+    .skew {
+      transform: skew(20deg, 10deg);
+    }
+    .matrix {
+      transform: matrix(1, 0.5, -0.5, 1, 30, 20);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="box translate">Translate</div>
+    <div class="box scale">Scale</div>
+    <div class="box rotate">Rotate</div>
+    <div class="box skew">Skew</div>
+    <div class="box matrix">Matrix</div>
+  </div>
+</body>
+</html>
