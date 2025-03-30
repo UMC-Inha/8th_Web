@@ -2,7 +2,7 @@ import clsx from "clsx";
 import { THEME, useTheme } from "./context/ThemeProvider";
 
 export default function ThemeContent(): JSX.Element {
-  const { theme } = useTheme();
+  const { theme, toggleTheme } = useTheme();
   const isLightMode = theme === THEME.LIGHT;
   return (
     <div
