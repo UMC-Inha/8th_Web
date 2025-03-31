@@ -1,0 +1,67 @@
+
+h1 {
+  margin-bottom: 20px;
+}
+
+.input-container {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+input {
+  width: 60%;
+  padding: 10px;
+  font-size: 16px;
+  margin: auto;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  outline: none;
+}
+
+.study-container {
+  display: flex;
+  justify-content: center;
+  gap: 50px;
+}
+
+.todo,
+.done {
+  width: 30%;
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+li {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.2);
+  align-items: center;
+}
+
+.complete-btn,
+.delete-btn {
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 14px;
+  box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.2);
+}
+
+.complete-btn {
+  background-color: #4caf50;
+  color: white;
+}
+
+.delete-btn {
+  background-color: #ff5555;
+  color: white;
+}
