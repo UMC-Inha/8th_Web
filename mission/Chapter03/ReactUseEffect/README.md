@@ -1,6 +1,4 @@
-# useEffect를 활용하여 영화 데이터를 불러오기
-
-# React + TypeScript + Vite
+# 영화 정보 사이트 로딩 에러 처리 및 여러개의 페이지 라우팅 처리
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
