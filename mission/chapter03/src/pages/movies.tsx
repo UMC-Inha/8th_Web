@@ -21,7 +21,7 @@ const MovieListPage = ({ type }: Props) => {
         `https://api.themoviedb.org/3/movie/${type}?language=ko-KR&page=${page}`,
         {
           headers: {
-            Authorization: `Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2NjRjYjZhNDA4YzczMjFiYjY0M2UyMWIxY2E3ZjgzNyIsIm5iZiI6MTcxNzM0MzE2MS4xNTI5OTk5LCJzdWIiOiI2NjVjOTNiOWUyZDcwNDRiYjU0ODE1Y2IiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.cNpVb-vueqHhSTgKADh14WcwQLTwkPaceQvsULUtcSU`,
+            Authorization: `Bearer ${import.meta.env.VITE_TMDB_API_KEY}`,
           },
         }
       );
