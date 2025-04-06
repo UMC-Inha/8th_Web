@@ -1,0 +1,11 @@
+- 🍠 `fetch` vs `axios`의 차이점에 대해 자세히 조사하여 아래 토글에 정리해주세요!
+    - `fetch` ?
+        - fetch는 브라우저 내장 API로 네트워크 요청을 수행하는 데 사용됨
+        - Promise 기반으로 동작하며 Response 객체를 반환함
+    - `axios` ?
+        - axios는 Promise 기반의 HTTP 클라이언트 라이브러리로 fetch보다 더 강력한 기능을 제공함.
+        - 자동으로 JSON 데이터를 변환해주며 fetch보다 더 직관적인 API를 제공함
+    - `fetch`와 `axios`의 차이
+        - fetch는 브라우저 내장 API이고 axios는 외부 라이브러리 설치를 필요로 함
+        - fetch는 .json()호출이 필요하지만 axios는 자동으로 JSON 변환해줌
+        - 작은 프로젝트에서는 fetch를, 복잡한 API 요청이 많다면 axios를 사용하는 것이 좋음
