@@ -1,9 +1,13 @@
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import { postSignin } from "../apis/auth";
 
 interface FormValues {
+  name: string;
   email: string;
   password: string;
+  bio: "";
+  avatar: "";
 }
 
 const LoginPage = () => {
@@ -15,8 +19,18 @@ const LoginPage = () => {
     formState: { errors },
   } = useForm<FormValues>();
 
-  const onSubmit = (data: FormValues) => {
-    console.log("로그인 시도:", data);
+  const onSubmit = async (data: FormValues) => {
+    try {
+      const res = await postSignin(data);
+      const { accessToken } = res.data;
+
+      localStorage.setItem("accessToken", accessToken);
+      alert("로그인 성공!");
+      navigate("/mypage");
+    } catch (err) {
+      alert("이메일 또는 비밀번호가 잘못되었습니다.");
+      console.error(err);
+    }
   };
 
   return (

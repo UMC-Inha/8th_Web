@@ -3,7 +3,9 @@ import RootLayout from "./layout/RootLayout";
 import HomePage from "./pages/Homepage";
 import LoginPage from "./pages/Loginpage";
 import NotFound from "./pages/NotFound";
-
+import SignupPage from "./pages/Signuppage";
+import ProtectedRoute from "./components/ProtectedRoute";
+import Mypage from "./pages/Mypage";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -12,6 +14,15 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <HomePage /> },
       { path: "login", element: <LoginPage /> },
+      { path: "signup", element: <SignupPage /> },
+      {
+        path: "mypage",
+        element: (
+          <ProtectedRoute>
+            <Mypage />
+          </ProtectedRoute>
+        ),
+      },
     ],
   },
 ]);

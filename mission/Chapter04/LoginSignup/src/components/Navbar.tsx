@@ -15,7 +15,12 @@ const Navbar = () => {
         >
           로그인
         </NavLink>
-        <button className="text-gray-700 dark:text-white">회원가입</button>
+        <NavLink
+          to="/signup"
+          className={({ isActive }) => (isActive ? activeClass : "")}
+        >
+          회원가입
+        </NavLink>
       </div>
     </nav>
   );
