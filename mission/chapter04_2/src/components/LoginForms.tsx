@@ -6,7 +6,6 @@ import "./LoginForm.css";
 function LoginForm() {
   const navigate = useNavigate();
 
-  //유효성 검사
   const { values, errors, handleChange, isValid } = useForm(
     {
       email: "",
