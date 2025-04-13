@@ -1,21 +1,33 @@
 import { useNavigate } from "react-router-dom";
-import { useForm } from "../hooks/useForm";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 import SignupHeader from "../components/SignupHeader";
 import { getButtonStyle } from "../utils/styles";
+
+const emailSchema = z.object({
+  email: z.string().email("올바른 이메일 형식을 입력해주세요."),
+});
+
+type EmailForm = z.infer<typeof emailSchema>;
 
 function SignupEmail() {
   const navigate = useNavigate();
 
-  const { values, errors, handleChange, isValid } = useForm(
-    { email: localStorage.getItem("signup-email") || "" },
-    {
-      email: (v: string) =>
-        !v.includes("@") ? "올바른 이메일 형식을 입력해주세요." : "",
-    }
-  );
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isValid },
+  } = useForm<EmailForm>({
+    resolver: zodResolver(emailSchema),
+    mode: "onChange",
+    defaultValues: {
+      email: localStorage.getItem("signup-email") || "",
+    },
+  });
 
-  const handleNext = () => {
-    localStorage.setItem("signup-email", values.email);
+  const onSubmit = (data: EmailForm) => {
+    localStorage.setItem("signup-email", data.email);
     navigate("/signup/password");
   };
 
@@ -30,29 +42,34 @@ function SignupEmail() {
       }}
     >
       <SignupHeader />
-      <input
-        type="text"
-        placeholder="이메일을 입력해주세요!"
-        value={values.email}
-        onChange={(e) => handleChange("email", e.target.value)}
-        style={{
-          padding: 10,
-          borderRadius: 8,
-          border: "1px solid #555555",
-          backgroundColor: "black",
-          color: "white",
-        }}
-      />
-      {errors.email && (
-        <p style={{ color: "red", fontSize: 12 }}>{errors.email}</p>
-      )}
-      <button
-        disabled={!isValid}
-        onClick={handleNext}
-        style={getButtonStyle(!isValid)}
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        style={{ display: "flex", flexDirection: "column", gap: 12 }}
       >
-        다음
-      </button>
+        <input
+          type="text"
+          placeholder="이메일을 입력해주세요!"
+          {...register("email")}
+          style={{
+            padding: 10,
+            borderRadius: 8,
+            border: "1px solid #555555",
+            backgroundColor: "black",
+            color: "white",
+          }}
+        />
+        {errors.email && (
+          <p style={{ color: "red", fontSize: 12 }}>{errors.email.message}</p>
+        )}
+
+        <button
+          type="submit"
+          disabled={!isValid}
+          style={getButtonStyle(!isValid)}
+        >
+          다음
+        </button>
+      </form>
     </div>
   );
 }
