@@ -1,4 +1,3 @@
-// src/pages/movie-detail.tsx
 import { useParams } from "react-router-dom";
 import { useFetchMovieDetail } from "../hooks/useFetchMovieDetail";
 import "../styles/movie-detail.css";
@@ -7,7 +6,14 @@ const MovieDetailPage = () => {
   const { movieId } = useParams();
   const { movie, credits, loading, error } = useFetchMovieDetail(movieId);
 
-  if (loading) return <div>로딩 중...</div>;
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-64">
+        <div className="w-10 h-10 border-4 border-green-400 border-t-transparent rounded-full animate-spin"></div>
+      </div>
+    );
+  }
+
   if (error) return <div>{error}</div>;
 
   return (
