@@ -7,6 +7,7 @@ interface ApiResponse<T> {
     isError: boolean
 }
 
+// useCustomFetch
 export default function useCustomFetch<T>(url: string): ApiResponse<T> {
     const [data, setData] = useState<T|null>(null)  
     const [isPending,setIsPending] = useState(false)  
