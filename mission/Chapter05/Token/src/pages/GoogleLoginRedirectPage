@@ -1,0 +1,25 @@
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+
+const GoogleLoginRedirectPage: React.FC = () => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const accessToken = urlParams.get("accessToken");
+    const refreshToken = urlParams.get("refreshToken");
+
+    if (accessToken && refreshToken) {
+      localStorage.setItem("accessToken", accessToken);
+      localStorage.setItem("refreshToken", refreshToken);
+      alert("Google 로그인 성공!");
+      navigate("/mypage");
+    } else {
+      alert("로그인에 실패했습니다.");
+      navigate("/login");
+    }
+  }, [navigate]);
+  return 0;
+};
+
+export default GoogleLoginRedirectPage;

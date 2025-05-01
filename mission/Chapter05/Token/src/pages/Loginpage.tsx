@@ -34,6 +34,11 @@ const LoginPage = () => {
     }
   };
 
+  const handleGoogleLogin = () => {
+    window.location.href =
+      import.meta.env.VITE_SERVER_API_URL + "/v1/auth/google/login";
+  };
+
   return (
     <div className="min-h-screen bg-black text-white flex items-center justify-center">
       <form
@@ -51,7 +56,11 @@ const LoginPage = () => {
           <h2 className="text-xl font-bold">로그인</h2>
         </div>
 
-        <button className="flex items-center justify-center gap-2 border border-zinc-500 py-2 rounded">
+        <button
+          type="button"
+          onClick={handleGoogleLogin}
+          className="flex items-center justify-center gap-2 border border-zinc-500 py-2 rounded"
+        >
           <img
             src="https://www.svgrepo.com/show/475656/google-color.svg"
             alt="Google"
