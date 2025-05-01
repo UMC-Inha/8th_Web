@@ -22,9 +22,10 @@ const LoginPage = () => {
   const onSubmit = async (data: FormValues) => {
     try {
       const res = await postSignin(data);
-      const { accessToken } = res.data;
+      const { accessToken, refreshToken } = res.data;
 
       localStorage.setItem("accessToken", accessToken);
+      localStorage.setItem("refreshToken", refreshToken);
       alert("로그인 성공!");
       navigate("/mypage");
     } catch (err) {
