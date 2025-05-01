@@ -4,7 +4,7 @@ import HomePage from "./pages/Homepage";
 import LoginPage from "./pages/Loginpage";
 import NotFound from "./pages/NotFound";
 import SignupPage from "./pages/Signuppage";
-import GoogleLoginRedirectPage from "./pages/Loginpage";
+import GoogleLoginRedirectPage from "./pages/GoogleLoginRedirectPage";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Mypage from "./pages/Mypage";
 const router = createBrowserRouter([
