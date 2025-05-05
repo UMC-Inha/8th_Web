@@ -2,7 +2,7 @@ import axiosInstance from "../api/axios";
 
 export const isLoggedIn = () => {
   const accessToken = localStorage.getItem("accessToken");
-  return !!accessToken; // accessToken이 있으면 true 반환
+  return !!accessToken; 
 };
 
 export const logout = () => {

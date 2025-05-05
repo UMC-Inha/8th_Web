@@ -19,3 +19,7 @@ export const setRefreshToken = (token: string) => {
 export const removeAccessToken = (): void => {
   localStorage.removeItem("accessToken");
 };
+
+export const removeRefreshToken = (): void => {
+  localStorage.removeItem("refreshToken");
+};

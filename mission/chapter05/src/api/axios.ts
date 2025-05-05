@@ -1,6 +1,11 @@
 import axios from "axios";
 import { refreshAccessToken } from "../utils/auth";
-import { getAccessToken, isLoggedIn } from "../utils/token";
+import {
+  getAccessToken,
+  isLoggedIn,
+  removeAccessToken,
+  removeRefreshToken,
+} from "../utils/token";
 
 const axiosInstance = axios.create({
   baseURL: "http://localhost:8000",
@@ -51,13 +56,16 @@ axiosInstance.interceptors.response.use(
 
         originalRequest.headers.Authorization = `Bearer ${accessToken}`;
         console.log("원래 요청 재시도 중", originalRequest);
-        const retryResponse = await axiosInstance(originalRequest);
+        const retryResponse = await axios(originalRequest);
         console.log("재요청 성공:", retryResponse.data);
 
         return retryResponse;
-      } catch (err) {
+      } catch (refreshError: any) {
         console.error("토큰 재발급 실패.");
+        removeAccessToken();
+        removeRefreshToken();
         window.location.href = "/login";
+        return Promise.reject(refreshError);
       }
     }
 
