@@ -91,7 +91,7 @@ const SignupPage = () => {
                 disabled={isSubmitting}
                 className ="w-full bg-blue-600 text-white py-3 rounded-md text-lg font-medium hover:bg-blue-700 transition-colors cursor-pointer disabled:bg-gray-300"
                 >
-                    로그인
+                    회원가입
                 </button>
         </div>
     </div>
