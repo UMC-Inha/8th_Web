@@ -1,12 +1,18 @@
 import useForm from "../hooks/useForm";
 import { UserSigninInformation, validateSignin } from "../utils/validate";
-import { postSignin } from "../apis/auth";
-import { LOCAL_STORAGE_KEY } from "../constants/key";
-import { useLocalStorage } from "../hooks/useLocalStorage";
-import { ResponseSigninDto } from "../types/auth";
+import { useAuth } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 const LoginPage = () => {
-    const { setItem } = useLocalStorage(LOCAL_STORAGE_KEY.accessToken);
+    const { login, accessToken } = useAuth();
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (accessToken) {
+            navigate("/");
+        }
+    }, [navigate, accessToken]);
 
     const { values, errors, touched, getInputProps } = useForm<UserSigninInformation>({
         initialValue: {
@@ -17,16 +23,12 @@ const LoginPage = () => {
     });
 
     const handleSubmit = async () => {
-        console.log("Submitted values: ", values);
-        try {
-            const response: ResponseSigninDto = await postSignin(values);
-            setItem(response.data.accessToken);
-            console.log("로그인 성공:", response);
-        } catch (error: any) {
-            console.error("로그인 실패", error);
-            alert(error?.message || "로그인 실패");
-        }
+        await login(values);
     };
+
+    const handleGoogleLogin = () => {
+        window.location.href = import.meta.env.VITE_SERVER_API_URL + "/v1/auth/google/login";
+    }
 
     // 오류가 하나라도 있거나, 입력값이 비어있으면 버튼을 비활성화
     const isDisabled: boolean =
@@ -65,6 +67,16 @@ const LoginPage = () => {
                     className="w-full bg-blue-600 text-white py-3 rounded-md text-lg font-medium hover:bg-blue-700 transition-colors cursor-pointer disabled:bg-gray-300"
                 >
                     로그인
+                </button>
+                <button
+                    type="button"
+                    onClick={handleGoogleLogin}
+                    className="w-full bg-blue-600 text-white py-3 rounded-md text-lg font-medium hover:bg-blue-700 transition-colors cursor-pointer disabled:bg-gray-300"
+                >
+                    <div className="flex items-center justify-center gap-4">
+                        <img src={'/images/google.svg'} alt="Google logo image"/>
+                        <span>구글로그인</span>
+                    </div>
                 </button>
             </div>
         </div>
