@@ -18,5 +18,3 @@ function SignupPage() {
 }
 
 export default SignupPage;
-
-//커밋메세지 수정용 주석
