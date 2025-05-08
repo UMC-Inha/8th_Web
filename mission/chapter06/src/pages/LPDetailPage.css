@@ -1,0 +1,118 @@
+.lp-detail-wrapper {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 16px;
+  margin-top: 100px;
+}
+
+.lp-detail-container {
+  width: 100%;
+  max-width: 600px;
+  padding: 32px;
+  color: white;
+  background-color: #111;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+.lp-detail-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.lp-author-block {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.lp-author-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+}
+
+.lp-author-name {
+  font-weight: bold;
+}
+
+.lp-date {
+  font-size: 13px;
+  color: gray;
+}
+
+.lp-cd-wrapper {
+  margin: 32px 0;
+  display: flex;
+  justify-content: center;
+}
+
+.lp-cd-image {
+  width: 250px;
+  height: 250px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.spinning {
+  animation: spin 10s linear infinite;
+}
+
+@keyframes spin {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.lp-description {
+  margin-top: 16px;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.lp-tags {
+  margin-top: 16px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.lp-tag {
+  background-color: #333;
+  padding: 5px 10px;
+  border-radius: 10px;
+  font-size: 13px;
+}
+
+.lp-likes {
+  margin-top: 24px;
+  font-size: 16px;
+  text-align: center;
+}
+
+.lp-detail-topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.lp-title {
+  font-size: 18px;
+  font-weight: bold;
+  color: white;
+}
+
+.lp-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.lp-action {
+  font-size: 20px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
