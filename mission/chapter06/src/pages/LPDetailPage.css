@@ -1,18 +1,15 @@
 .lp-detail-wrapper {
-  height: 100vh;
   display: flex;
   justify-content: center;
-  align-items: center;
-  padding: 0 16px;
-  margin-top: 100px;
+  padding: 100px 16px 32px;
 }
 
 .lp-detail-container {
   width: 100%;
   max-width: 600px;
   padding: 32px;
-  color: white;
   background-color: #111;
+  color: white;
   border-radius: 12px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
 }
@@ -44,6 +41,29 @@
   color: gray;
 }
 
+.lp-detail-topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 16px 0;
+}
+
+.lp-title {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.lp-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.lp-action {
+  font-size: 20px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
 .lp-cd-wrapper {
   margin: 32px 0;
   display: flex;
@@ -69,8 +89,9 @@
 
 .lp-description {
   margin-top: 16px;
-  font-size: 12px;
+  font-size: 14px;
   line-height: 1.6;
+  color: #ddd;
 }
 
 .lp-tags {
@@ -93,26 +114,60 @@
   text-align: center;
 }
 
-.lp-detail-topbar {
+.lp-comments-container {
+  margin-top: 40px;
+  background-color: #1f1f1f;
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.lp-comments-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 16px;
 }
 
-.lp-title {
-  font-size: 18px;
-  font-weight: bold;
-  color: white;
-}
-
-.lp-actions {
+.lp-sort-buttons {
   display: flex;
-  gap: 12px;
+  gap: 8px;
 }
 
-.lp-action {
-  font-size: 20px;
+.lp-sort-buttons button {
+  background-color: #333;
+  color: #fff;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 6px;
+  font-size: 13px;
   cursor: pointer;
-  transition: transform 0.2s ease;
+}
+
+.lp-sort-buttons button.active {
+  background-color: #fff;
+  color: #000;
+}
+
+.lp-comment-input {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.lp-comment-input input {
+  flex: 1;
+  background-color: #2a2a2a;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 12px;
+}
+
+.lp-comment-input button {
+  background-color: #555;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 16px;
+  cursor: pointer;
 }

@@ -1,5 +1,9 @@
 import "./SkeletonCard.css";
 
-const SkeletonCard = () => <div className="lp-card skeleton-card" />;
+const SkeletonCard = () => (
+  <div className="lp-card-wrapper">
+    <div className="skeleton-card" />
+  </div>
+);
 
 export default SkeletonCard;

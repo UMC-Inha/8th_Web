@@ -3,6 +3,7 @@ import { useQuery, useInfiniteQuery } from "react-query";
 import axios from "axios";
 import { useEffect, useRef, useState } from "react";
 import "./LPDetailPage.css";
+import CommentBlock from "../components/CommentBlock";
 
 interface LP {
   id: number;
@@ -76,7 +77,6 @@ const LPDetailPage = () => {
 
   const allComments = commentData?.pages.flatMap((page) => page.data) ?? [];
   const commentObserverRef = useRef<HTMLDivElement | null>(null);
-  //다음 댓글 불러오는 용도로 사용
 
   useEffect(() => {
     if (!commentObserverRef.current || !hasNextPage) return;
@@ -171,24 +171,13 @@ const LPDetailPage = () => {
 
           <ul className="lp-comment-list">
             {loadingComments ? (
-              <li>로딩 중</li>
+              <li>로딩 중...</li>
             ) : (
               allComments.map((comment) => (
-                <li key={comment.id} className="lp-comment-item">
-                  <img
-                    src={comment.user.avatar}
-                    alt="avatar"
-                    className="lp-comment-avatar"
-                  />
-                  <div>
-                    <div className="lp-comment-user">{comment.user.name}</div>
-                    <div className="lp-comment-content">{comment.content}</div>
-                  </div>
-                </li>
+                <CommentBlock key={comment.id} comment={comment} />
               ))
             )}
             <div ref={commentObserverRef} style={{ height: "1px" }} />
-            {/* 이거 감지해서 다음 댓글 불러오도록  */}
           </ul>
         </div>
       </div>
