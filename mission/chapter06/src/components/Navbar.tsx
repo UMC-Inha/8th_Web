@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import "./Navbar.css";
 import { logout } from "../utils/logout";
 
-const Navbar = () => {
+const Navbar = ({ onMenuClick }: { onMenuClick: () => void }) => {
   const navigate = useNavigate();
   const isLoggedIn = !!localStorage.getItem("accessToken");
   const nickname = localStorage.getItem("name") || "사용자";
@@ -21,7 +21,9 @@ const Navbar = () => {
     <header className="navbar">
       <div className="navbar-inner">
         <div className="navbar-left">
-          <span className="menu-icon">☰</span>
+          <span className="menu-icon" onClick={onMenuClick}>
+            ☰
+          </span>
           <span className="logo-text" onClick={() => navigate("/")}>
             돌려돌려LP판
           </span>
@@ -35,18 +37,8 @@ const Navbar = () => {
             </>
           ) : (
             <>
-              <button
-                onClick={() => navigate("/login")}
-                className="login-button"
-              >
-                로그인
-              </button>
-              <button
-                onClick={() => navigate("/signup")}
-                className="register-button"
-              >
-                회원가입
-              </button>
+              <button onClick={() => navigate("/login")}>로그인</button>
+              <button onClick={() => navigate("/signup")}>회원가입</button>
             </>
           )}
         </div>

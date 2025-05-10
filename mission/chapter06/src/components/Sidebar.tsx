@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import "./Sidebar.css";
 
 const Sidebar = ({
   isOpen,
@@ -9,28 +10,17 @@ const Sidebar = ({
 }) => {
   return (
     <>
-      {isOpen && (
-        <div
-          onClick={onClose}
-          className="fixed inset-0 bg-black bg-opacity-50 z-40"
-        />
-      )}
-
+      {isOpen && <div onClick={onClose} className="sidebar-overlay" />}
       <div
-        className={`fixed top-0 left-0 w-64 h-full bg-zinc-900 z-50 p-6 transform transition-transform duration-300 ${
-          isOpen ? "translate-x-0" : "-translate-x-full"
-        }`}
+        className={`sidebar ${isOpen ? "open" : ""}`}
+        onClick={(e) => e.stopPropagation()}
       >
-        <div className="text-white text-lg font-bold mb-6">DOLIGO</div>
-        <nav className="flex flex-col gap-4">
-          <Link to="/" onClick={onClose} className="flex items-center gap-2">
+        <div className="sidebar-title">DOLIGO</div>
+        <nav className="sidebar-nav">
+          <Link to="/" onClick={onClose} className="sidebar-link">
             🔍 찾기
           </Link>
-          <Link
-            to="/mypage"
-            onClick={onClose}
-            className="flex items-center gap-2"
-          >
+          <Link to="/mypage" onClick={onClose} className="sidebar-link">
             👤 마이페이지
           </Link>
         </nav>

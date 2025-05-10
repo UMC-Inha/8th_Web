@@ -28,7 +28,7 @@ const LPCard = ({ lp }: LPCardProps) => {
           <div className="lp-card-title">{lp.title}</div>
           <div className="lp-card-meta">
             <span>{formattedDate}</span>
-            <span>❤️ {lp.likes.length}</span>
+            <span>❤️ {lp.likes.length}</span> 
           </div>
         </div>
       </div>
