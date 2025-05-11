@@ -4,7 +4,7 @@ import { getLpList } from "../apis/lp";
 
 export function useGetLpList({ cursor, search, order, limit }: PaginationDto) {
   return useQuery({
-    queryKey: ["lps",order],
+    queryKey: ["lps", cursor, search, order, limit],
     queryFn: () =>
       getLpList({
         cursor,

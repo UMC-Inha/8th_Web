@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getLpDetail } from "../apis/lp";
 import { Lp } from "../types/lp";
 import { ArrowLeft } from "lucide-react";
+import { LpCommentsSection } from "./LpCommentsSection";
 
 const LpDetailPage = () => {
   const { lpId } = useParams();
@@ -20,30 +21,37 @@ const LpDetailPage = () => {
   const lp: Lp = data.data;
 
   return (
-    <div className="flex justify-center items-start py-10">
-      <div className="bg-gray text-white p-8 rounded-2xl shadow-lg w-full max-w-2xl">
-        <button
-          onClick={() => navigate(-1)}
-          className="mb-6 px-3 py-2 rounded text-white bg-blue-900 hover:bg-zinc-600 transition flex items-center gap-2"
-        >
-          <ArrowLeft className="w- h-6" />
-          <span className="text-base">뒤로가기</span>
-        </button>
-        <img
-          src={lp.thumbnail}
-          alt={lp.title}
-          className="w-full h-64 object-cover rounded-md mb-6"
-        />
-        <h1 className="text-3xl font-bold mb-2">{lp.title}</h1>
-        <p className="text-sm text-zinc-400 mb-4">
-          작성일: {new Date(lp.createdAt).toLocaleDateString()}
-        </p>
-        <p className="mb-6">{lp.content}</p>
-        <div className="flex gap-4">
-          <button className="border px-4 py-2 rounded">수정</button>
-          <button className="border px-4 py-2 rounded">삭제</button>
-          <button className="border px-4 py-2 rounded">❤️ 좋아요</button>
+    <div className="max-w-2xl mx-auto p-6 text-white">
+      <button
+        onClick={() => navigate(-1)}
+        className="mb-6 px-3 py-2 rounded text-white bg-blue-900 hover:bg-zinc-600 transition flex items-center gap-2"
+      >
+        <ArrowLeft className="w- h-6" />{" "}
+      </button>
+      <h1 className="text-3xl font-bold mb-2">{lp.title}</h1>
+      <p className="text-sm text-zinc-400 mb-4">
+        작성일: {new Date(lp.createdAt).toLocaleDateString()}{" "}
+      </p>
+      <div className="bg-gray-900 rounded-xl p-6 shadow-lg">
+        <div className="w-full aspect-square relative mb-6">
+          <div className="absolute inset-0 rounded-full overflow-hidden shadow-lg border-4 border-black">
+            <img
+              src={lp.thumbnail}
+              alt={lp.title}
+              className="w-full h-full object-cover rounded-full"
+            />
+          </div>
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-20 bg-white rounded-full z-10" />
         </div>
+        <p className="text-gray-300 italic text-ml mb-4">{lp.content}</p>
+
+        <div className="flex gap-4">
+          <button className="border px-4 py-2 rounded">수정</button>{" "}
+          <button className="border px-4 py-2 rounded">삭제</button>{" "}
+          <button className="border px-4 py-2 rounded">❤️ 좋아요</button>{" "}
+        </div>
+
+        <LpCommentsSection />
       </div>
     </div>
   );

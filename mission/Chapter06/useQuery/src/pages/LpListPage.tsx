@@ -17,21 +17,22 @@ const LpListPage = () => {
           cursor: pageParam,
           search: "",
           order,
-          limit: 8,
+          limit: 6,
         }),
       initialPageParam: 0,
-      getNextPageParam: (lastPage) => {
-        return lastPage.hasNext ? lastPage.nextCursor : undefined;
-      },
+      getNextPageParam: (lastPage) =>
+        lastPage.data.hasNext ? lastPage.data.nextCursor : undefined,
     });
 
   const { ref, inView } = useInView();
 
   useEffect(() => {
-    if (inView && hasNextPage && !isPending) {
+    if (inView && hasNextPage && !isFetchingNextPage && !isPending) {
       fetchNextPage();
     }
-  }, [inView, hasNextPage, fetchNextPage, isPending]);
+  }, [inView, hasNextPage, fetchNextPage, isPending, isFetchingNextPage]);
+
+  const allLps = data?.pages.flatMap((page) => page.data.data) ?? [];
 
   return (
     <div className="p-4">
@@ -55,18 +56,19 @@ const LpListPage = () => {
       </div>
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 p-4">
-        {data?.pages.flatMap((page) =>
-          page.data.data.map((lp: Lp) => <LpCard key={lp.id} lp={lp} />)
-        )}
-
-        {isPending || isFetchingNextPage
-          ? Array.from({ length: 8 }).map((_, i) => (
-              <LpCardSkeleton key={`skeleton-${i}`} />
+        {isPending && !data
+          ? Array.from({ length: 6 }).map((_, i) => (
+              <LpCardSkeleton key={`initial-skeleton-${i}`} />
             ))
-          : null}
+          : allLps.map((lp: Lp) => <LpCard key={lp.id} lp={lp} />)}
+
+        {isFetchingNextPage &&
+          Array.from({ length: 4 }).map((_, i) => (
+            <LpCardSkeleton key={`next-skeleton-${i}`} />
+          ))}
       </div>
 
-      <div ref={ref} className="h-10" />
+      <div ref={ref} style={{ height: "1px" }} />
     </div>
   );
 };
