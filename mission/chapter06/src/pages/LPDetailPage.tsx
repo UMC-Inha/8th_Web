@@ -47,8 +47,14 @@ const fetchComments = async ({
   queryKey,
 }: any): Promise<CommentPage> => {
   const [, lpId, order] = queryKey;
+  const token = localStorage.getItem("accessToken");
+
   const res = await axios.get(`http://localhost:8000/v1/lps/${lpId}/comments`, {
     params: { cursor: pageParam, limit: 10, order },
+    headers: {
+      Authorization: `Bearer ${token}`,
+      accept: "application/json",
+    },
   });
   return res.data.data;
 };
