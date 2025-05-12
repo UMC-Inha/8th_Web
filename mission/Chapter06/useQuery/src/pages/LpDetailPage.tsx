@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getLpDetail } from "../apis/lp";
 import { Lp } from "../types/lp";
 import { ArrowLeft } from "lucide-react";
-import { LpCommentsSection } from "./LpCommentsSection";
+import { LpCommentsPage } from "./LpCommentsPage";
 
 const LpDetailPage = () => {
   const { lpId } = useParams();
@@ -29,9 +29,22 @@ const LpDetailPage = () => {
         <ArrowLeft className="w- h-6" />{" "}
       </button>
       <h1 className="text-3xl font-bold mb-2">{lp.title}</h1>
-      <p className="text-sm text-zinc-400 mb-4">
-        작성일: {new Date(lp.createdAt).toLocaleDateString()}{" "}
-      </p>
+      <div className="text-sm text-zinc-400 mb-4 flex items-center gap-4 flex-wrap">
+        <span>작성일: {new Date(lp.createdAt).toLocaleDateString()} </span>
+        <span>좋아요: {lp.likes.length}개</span>
+        <div className="flex items-center gap-2 flex-wrap">
+          태그:
+          {lp.tags.map((tag) => (
+            <span
+              key={tag.id}
+              className="bg-blue-800 text-white px-3 py-1 rounded-full"
+            >
+              #{tag.name}
+            </span>
+          ))}
+        </div>
+      </div>
+
       <div className="bg-gray-900 rounded-xl p-6 shadow-lg">
         <div className="w-full aspect-square relative mb-6">
           <div className="absolute inset-0 rounded-full overflow-hidden shadow-lg border-4 border-black">
@@ -51,7 +64,7 @@ const LpDetailPage = () => {
           <button className="border px-4 py-2 rounded">❤️ 좋아요</button>{" "}
         </div>
 
-        <LpCommentsSection />
+        <LpCommentsPage />
       </div>
     </div>
   );

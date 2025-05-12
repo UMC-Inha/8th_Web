@@ -2,9 +2,9 @@ import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { getComments } from "../apis/getComments";
+import { getComments } from "../apis/Comments";
 import { CommentSkeleton } from "../components/CommentSkeleton";
-export const LpCommentsSection = () => {
+export const LpCommentsPage = () => {
   const { lpId } = useParams();
   const [order, setOrder] = useState<"asc" | "desc">("asc");
   const { ref, inView } = useInView();
@@ -20,10 +20,10 @@ export const LpCommentsSection = () => {
     });
 
   useEffect(() => {
-    if (inView && hasNextPage && !isFetchingNextPage) {
+    if (inView && hasNextPage && !isFetchingNextPage && !isPending) {
       fetchNextPage();
     }
-  }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage]);
+  }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage, isPending]);
 
   const allComments = data?.pages.flatMap((page) => page.data.data) ?? [];
 
@@ -47,16 +47,41 @@ export const LpCommentsSection = () => {
           오래된순
         </button>
       </div>
-
-      <div className="space-y-4">
+      <div className="flex items-center gap-2 mb-6">
+        <div className="w-8 h-8 rounded-full bg-pink-500 text-xs flex items-center justify-center font-semibold">
+          김
+        </div>
+        <div className="flex-1">
+          <input
+            type="text"
+            placeholder="댓글을 입력해주세요"
+            className="w-full text-sm bg-zinc-800 border border-zinc-700 rounded px-3 py-2 text-white placeholder-zinc-400"
+            disabled
+          />
+        </div>
+        <button
+          className="text-sm bg-zinc-600 text-white px-3 py-1 rounded hover:bg-zinc-500"
+          disabled
+        >
+          작성
+        </button>
+      </div>
+      <div className="space-y-5">
         {isPending
           ? Array.from({ length: 5 }).map((_, i) => <CommentSkeleton key={i} />)
           : allComments.map((comment) => (
-              <div key={comment.id} className="bg-gray-100 p-3 rounded">
-                <p className="text-sm text-gray-800">{comment.content}</p>
-                <div className="text-xs text-gray-500 mt-1">
-                  {comment.author.name} ·{" "}
-                  {new Date(comment.createdAt).toLocaleDateString()}
+              <div key={comment.id} className="flex gap-2 items-start">
+                <div className="w-8 h-8 rounded-full bg-zinc-700 flex items-center justify-center text-xs">
+                  {comment.author.name.charAt(0)}
+                </div>
+                <div className="flex-1">
+                  <div className="text-sm font-semibold text-white">
+                    {comment.author.name}
+                  </div>
+                  <p className="text-sm text-zinc-300">{comment.content}</p>
+                  <div className="text-xs text-zinc-500 mt-1">
+                    {new Date(comment.createdAt).toLocaleDateString()}
+                  </div>
                 </div>
               </div>
             ))}
@@ -67,15 +92,7 @@ export const LpCommentsSection = () => {
           ))}
       </div>
 
-      <div ref={ref} className="h-10" />
-
-      <div className="mt-6 border-t pt-4">
-        <textarea
-          placeholder="댓글 입력 창이 될 친구"
-          className="w-full border rounded p-2 text-sm text-gray-500 bg-gray-100"
-          disabled
-        />
-      </div>
+      <div ref={ref} style={{ height: "1px" }} />
     </div>
   );
 };
