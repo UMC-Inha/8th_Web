@@ -12,7 +12,7 @@ const MyPage = () => {
         console.log(response);
         setData(response);
       } catch(error) {
-        console.error("ㅗ류", error)
+        console.error("오류입니다", error)
       }
     };
     getData();
