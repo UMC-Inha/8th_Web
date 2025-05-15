@@ -1,10 +1,10 @@
 import { useParams } from "react-router-dom";
 import { useQuery, useInfiniteQuery } from "react-query";
-import axios from "axios";
+import axiosInstance from "../utils/axiosInstance";
 import { useEffect, useRef, useState } from "react";
 import "./LPDetailPage.css";
 import CommentBlock from "../components/CommentBlock";
-import axiosInstance from "../utils/axiosInstance";
+import useAddComment from "../hooks/useAddComment";
 
 interface LP {
   id: number;
@@ -66,6 +66,8 @@ const fetchComments = async ({
 const LPDetailPage = () => {
   const { lpId } = useParams<{ lpId: string }>();
   const [commentOrder, setCommentOrder] = useState<"asc" | "desc">("desc");
+  const [commentInput, setCommentInput] = useState("");
+  const { mutate: addComment, isLoading: isPosting } = useAddComment(lpId!);
 
   const {
     data: lpData,
@@ -111,6 +113,15 @@ const LPDetailPage = () => {
     (Date.now() - createdAt.getTime()) / (1000 * 60 * 60 * 24)
   );
   const displayDate = daysAgo > 0 ? `${daysAgo}일 전` : "오늘";
+
+  const handleAddComment = () => {
+    if (!commentInput.trim()) return;
+    addComment(commentInput, {
+      onSuccess: () => {
+        setCommentInput("");
+      },
+    });
+  };
 
   return (
     <div className="lp-detail-wrapper">
@@ -175,8 +186,19 @@ const LPDetailPage = () => {
           </div>
 
           <div className="lp-comment-input">
-            <input type="text" placeholder="댓글을 입력해주세요" disabled />
-            <button disabled>작성</button>
+            <input
+              type="text"
+              placeholder="댓글을 입력해주세요"
+              value={commentInput}
+              onChange={(e) => setCommentInput(e.target.value)}
+              disabled={isPosting}
+            />
+            <button
+              onClick={handleAddComment}
+              disabled={isPosting || !commentInput.trim()}
+            >
+              작성
+            </button>
           </div>
 
           <ul className="lp-comment-list">

@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import "./CreateLPModal.css";
 import lpImage from "../assets/lpimage.png";
 import axiosInstance from "../utils/axiosInstance";
+import { useMutation } from "react-query";
 
 interface Props {
   onClose: () => void;
@@ -43,21 +44,37 @@ const CreateLPModal = ({ onClose }: Props) => {
     setTags(tags.filter((_, i) => i !== index));
   };
 
-  const handleSubmit = async () => {
-    try {
-      await axiosInstance.post("http://localhost:8000/v1/lps", {
-        title,
-        content,
-        thumbnail,
-        tags,
-        published: true,
-      });
+  const createLPMutation = useMutation<
+    AxiosResponse<any>,
+    Error,
+    {
+      title: string;
+      content: string;
+      thumbnail: string;
+      tags: string[];
+      published: boolean;
+    } // mutation에 넘기는 인자
+  >({
+    mutationFn: (newLP) =>
+      axiosInstance.post("http://localhost:8000/v1/lps", newLP),
+    onSuccess: () => {
       alert("등록 성공!");
       onClose();
-    } catch (err) {
+    },
+    onError: (error) => {
       alert("등록 실패");
-      console.error(err);
-    }
+      console.error(error);
+    },
+  });
+
+  const handleSubmit = () => {
+    createLPMutation.mutate({
+      title,
+      content,
+      thumbnail,
+      tags,
+      published: true,
+    });
   };
 
   return (
@@ -110,9 +127,12 @@ const CreateLPModal = ({ onClose }: Props) => {
             </span>
           ))}
         </div>
-
-        <button className="submit-btn" onClick={handleSubmit}>
-          Add LP
+        <button
+          className="submit-btn"
+          onClick={handleSubmit}
+          disabled={createLPMutation.isLoading}
+        >
+          {createLPMutation.isLoading ? "등록 중..." : "Add LP"}
         </button>
       </div>
     </div>
