@@ -4,7 +4,6 @@ const axiosInstance = axios.create({
   baseURL: "http://localhost:8000",
 });
 
-// 요청 시 accessToken 삽입
 axiosInstance.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem("accessToken");
@@ -16,7 +15,6 @@ axiosInstance.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
-// 응답 시 401 처리 → accessToken 갱신 후 재요청
 axiosInstance.interceptors.response.use(
   (response) => response,
   async (error) => {
@@ -48,6 +46,6 @@ axiosInstance.interceptors.response.use(
 
     return Promise.reject(error);
   }
-); // ← ✅ 여기 닫힘 괄호 꼭 있어야 함
+);
 
 export default axiosInstance;

@@ -1,20 +1,46 @@
 import { useNavigate } from "react-router-dom";
 import "./Navbar.css";
-import { logout } from "../utils/logout";
+import { useMutation } from "react-query";
+import axiosInstance from "../utils/axiosInstance";
 
 const Navbar = ({ onMenuClick }: { onMenuClick: () => void }) => {
   const navigate = useNavigate();
   const isLoggedIn = !!localStorage.getItem("accessToken");
   const nickname = localStorage.getItem("name") || "사용자";
 
-  const handleLogout = async () => {
-    const success = await logout();
-    if (success) {
-      alert("로그아웃 되었습니다.");
-      navigate("/login");
-    } else {
-      alert("로그아웃 실패");
+  const logoutMutation = useMutation(
+    async () => {
+      const accessToken = localStorage.getItem("accessToken");
+      if (!accessToken) throw new Error("accessToken 없음");
+
+      await axiosInstance.post(
+        "/v1/auth/signout",
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("refreshToken");
+      localStorage.removeItem("userId");
+      localStorage.removeItem("name");
+    },
+    {
+      onSuccess: () => {
+        alert("로그아웃 되었습니다.");
+        navigate("/login");
+      },
+      onError: () => {
+        alert("로그아웃 실패");
+      },
     }
+  );
+
+  const handleLogout = () => {
+    logoutMutation.mutate();
   };
 
   return (

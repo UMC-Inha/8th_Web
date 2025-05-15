@@ -1,6 +1,7 @@
 import { useForm } from "../hooks/useForm";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useMutation } from "react-query";
 import "./LoginForm.css";
 
 function LoginForm() {
@@ -19,10 +20,8 @@ function LoginForm() {
     }
   );
 
-  const onSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    try {
+  const loginMutation = useMutation(
+    async () => {
       const res = await axios.post("http://localhost:8000/v1/auth/signin", {
         email: values.email,
         password: values.password,
@@ -34,12 +33,21 @@ function LoginForm() {
       localStorage.setItem("refreshToken", refreshToken);
       localStorage.setItem("name", name);
       localStorage.setItem("userId", String(id));
-
-      alert("로그인 성공!");
-      navigate("/");
-    } catch (err: any) {
-      alert(err.response?.data?.detail || "로그인 실패");
+    },
+    {
+      onSuccess: () => {
+        alert("로그인 성공!");
+        navigate("/");
+      },
+      onError: (err: any) => {
+        alert(err.response?.data?.detail || "로그인 실패");
+      },
     }
+  );
+
+  const onSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    loginMutation.mutate();
   };
 
   return (
@@ -79,7 +87,7 @@ function LoginForm() {
 
       <button
         type="submit"
-        disabled={!isValid}
+        disabled={!isValid || loginMutation.isLoading}
         className={`submit-button ${!isValid ? "disabled" : ""}`}
       >
         로그인
