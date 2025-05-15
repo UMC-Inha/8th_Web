@@ -28,11 +28,12 @@ function LoginForm() {
         password: values.password,
       });
 
-      const { accessToken, refreshToken, name } = res.data.data;
+      const { accessToken, refreshToken, name, id } = res.data.data;
 
       localStorage.setItem("accessToken", accessToken);
       localStorage.setItem("refreshToken", refreshToken);
       localStorage.setItem("name", name);
+      localStorage.setItem("userId", String(id));
 
       alert("로그인 성공!");
       navigate("/");

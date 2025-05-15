@@ -25,7 +25,7 @@ interface Comment {
   id: number;
   content: string;
   createdAt: string;
-  user: {
+  author: {
     id: number;
     name: string;
     avatar: string;
@@ -89,6 +89,8 @@ const LPDetailPage = () => {
 
   const allComments = commentData?.pages.flatMap((page) => page.data) ?? [];
   const commentObserverRef = useRef<HTMLDivElement | null>(null);
+
+  const currentUserId = Number(localStorage.getItem("userId"));
 
   useEffect(() => {
     if (!commentObserverRef.current || !hasNextPage) return;
@@ -206,7 +208,12 @@ const LPDetailPage = () => {
               <li>로딩 중...</li>
             ) : (
               allComments.map((comment) => (
-                <CommentBlock key={comment.id} comment={comment} />
+                <CommentBlock
+                  key={comment.id}
+                  comment={comment}
+                  lpId={lpId!}
+                  currentUserId={currentUserId}
+                />
               ))
             )}
             <div ref={commentObserverRef} style={{ height: "1px" }} />
