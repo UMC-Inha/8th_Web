@@ -1,7 +1,7 @@
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import LPListPage from "./pages/LPListPage";
+//import LPListPage from "./pages/LPListPage";
 import LPDetailPage from "./pages/LPDetailPage";
 import LoginPage from "./pages/LoginPage";
 import MyPage from "./pages/MyPage";
@@ -11,6 +11,7 @@ import SignupPage from "./pages/SignupPage";
 import SignupEmail from "./pages/SignupEmail";
 import SignupPassword from "./pages/SignupPassword";
 import SignupProfile from "./pages/SignupProfile";
+import LPListPageWithModal from "./pages/LPListPageWithModal";
 
 const queryClient = new QueryClient();
 
@@ -20,7 +21,8 @@ function App() {
       <Router>
         <Routes>
           <Route element={<Layout />}>
-            <Route path="/" element={<LPListPage />} />
+            {/* <Route path="/" element={<LPListPage />} /> */}
+            <Route path="/" element={<LPListPageWithModal />} />
             <Route
               path="/lps/:lpId"
               element={

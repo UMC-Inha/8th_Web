@@ -4,6 +4,7 @@ import axios from "axios";
 import { useEffect, useRef, useState } from "react";
 import "./LPDetailPage.css";
 import CommentBlock from "../components/CommentBlock";
+import axiosInstance from "../utils/axiosInstance";
 
 interface LP {
   id: number;
@@ -38,7 +39,7 @@ interface CommentPage {
 }
 
 const fetchLPDetail = async (id: string): Promise<LP> => {
-  const res = await axios.get(`http://localhost:8000/v1/lps/${id}`);
+  const res = await axiosInstance.get(`http://localhost:8000/v1/lps/${id}`);
   return res.data.data;
 };
 
@@ -49,13 +50,16 @@ const fetchComments = async ({
   const [, lpId, order] = queryKey;
   const token = localStorage.getItem("accessToken");
 
-  const res = await axios.get(`http://localhost:8000/v1/lps/${lpId}/comments`, {
-    params: { cursor: pageParam, limit: 10, order },
-    headers: {
-      Authorization: `Bearer ${token}`,
-      accept: "application/json",
-    },
-  });
+  const res = await axiosInstance.get(
+    `http://localhost:8000/v1/lps/${lpId}/comments`,
+    {
+      params: { cursor: pageParam, limit: 10, order },
+      headers: {
+        Authorization: `Bearer ${token}`,
+        accept: "application/json",
+      },
+    }
+  );
   return res.data.data;
 };
 

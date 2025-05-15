@@ -5,18 +5,19 @@
   border-bottom: 1px solid #333;
 }
 
-.comment-avatar {
+.comment-avatar,
+.comment-avatar-placeholder {
   width: 36px;
   height: 36px;
   border-radius: 50%;
+}
+
+.comment-avatar {
   object-fit: cover;
 }
 
 .comment-avatar-placeholder {
   background-color: #808080;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
 }
 
 .comment-body {
