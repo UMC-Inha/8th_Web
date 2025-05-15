@@ -1,0 +1,173 @@
+.lp-detail-wrapper {
+  display: flex;
+  justify-content: center;
+  padding: 100px 16px 32px;
+}
+
+.lp-detail-container {
+  width: 100%;
+  max-width: 600px;
+  padding: 32px;
+  background-color: #111;
+  color: white;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+.lp-detail-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.lp-author-block {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.lp-author-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+}
+
+.lp-author-name {
+  font-weight: bold;
+}
+
+.lp-date {
+  font-size: 13px;
+  color: gray;
+}
+
+.lp-detail-topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 16px 0;
+}
+
+.lp-title {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.lp-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.lp-action {
+  font-size: 20px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.lp-cd-wrapper {
+  margin: 32px 0;
+  display: flex;
+  justify-content: center;
+}
+
+.lp-cd-image {
+  width: 250px;
+  height: 250px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.spinning {
+  animation: spin 10s linear infinite;
+}
+
+@keyframes spin {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.lp-description {
+  margin-top: 16px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #ddd;
+}
+
+.lp-tags {
+  margin-top: 16px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.lp-tag {
+  background-color: #333;
+  padding: 5px 10px;
+  border-radius: 10px;
+  font-size: 13px;
+}
+
+.lp-likes {
+  margin-top: 24px;
+  font-size: 16px;
+  text-align: center;
+}
+
+.lp-comments-container {
+  margin-top: 40px;
+  background-color: #1f1f1f;
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.lp-comments-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.lp-sort-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.lp-sort-buttons button {
+  background-color: #333;
+  color: #fff;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 6px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.lp-sort-buttons button.active {
+  background-color: #fff;
+  color: #000;
+}
+
+.lp-comment-input {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.lp-comment-input input {
+  flex: 1;
+  background-color: #2a2a2a;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 12px;
+}
+
+.lp-comment-input button {
+  background-color: #555;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 16px;
+  cursor: pointer;
+}
