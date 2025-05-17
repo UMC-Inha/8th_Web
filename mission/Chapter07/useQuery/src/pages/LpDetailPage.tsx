@@ -1,11 +1,14 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import { getLpDetail } from "../apis/lp";
+import {
+  getLpById as getLpByIdApi,
+  updateLpById as updateLpByIdApi,
+  deleteLpById as deleteLpByIdApi,
+} from "../apis/lp";
 import { Lp } from "../types/lp";
 import { ArrowLeft } from "lucide-react";
 import { LpCommentsPage } from "./LpCommentsPage";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { updateLp, deleteLp } from "../apis/lp";
 import { UpdateLpModal } from "../components/UpdateLpMdal";
 import { useState } from "react";
 import { ResponseMyInfoDto } from "../types/auth";
@@ -23,7 +26,7 @@ const LpDetailPage = () => {
   const myUserId = me?.data.id;
 
   const { mutate: handleDelete } = useMutation({
-    mutationFn: () => deleteLp(Number(lpId)),
+    mutationFn: () => deleteLpByIdApi(Number(lpId)),
     onSuccess: () => {
       alert("삭제 완료!");
       navigate("/lps");
@@ -36,7 +39,7 @@ const LpDetailPage = () => {
       content: string;
       thumbnail: string | File;
       tags: string[];
-    }) => updateLp(Number(lpId), form),
+    }) => updateLpByIdApi(Number(lpId), form),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["lpDetail", lpId] });
       setIsEditModalOpen(false);
@@ -86,7 +89,7 @@ const LpDetailPage = () => {
 
   const { data, isPending, isError } = useQuery({
     queryKey: ["lpDetail", lpId],
-    queryFn: () => getLpDetail(Number(lpId)),
+    queryFn: () => getLpByIdApi(Number(lpId)),
     enabled: !!lpId,
   });
 

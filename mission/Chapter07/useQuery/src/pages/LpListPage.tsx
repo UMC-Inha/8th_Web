@@ -4,13 +4,12 @@ import {
   useQueryClient,
 } from "@tanstack/react-query";
 import { useInView } from "react-intersection-observer";
-import { getLpList } from "../apis/lp";
+import { getLps as getLpsApi, createLp as createLpApi } from "../apis/lp";
 import { LpCard } from "../components/LpCard";
 import { useState, useEffect } from "react";
 import { LpCardSkeleton } from "../components/LpCardSkeleton";
 import { Lp } from "../types/lp";
 import { AddLpModal } from "../components/AddLpModal";
-import { createLp } from "../apis/lp";
 import { uploadImage } from "../apis/upload";
 
 const LpListPage = () => {
@@ -20,7 +19,7 @@ const LpListPage = () => {
     useInfiniteQuery({
       queryKey: ["lps", order],
       queryFn: ({ pageParam = 0 }) =>
-        getLpList({
+        getLpsApi({
           cursor: pageParam,
           search: "",
           order,
@@ -36,7 +35,7 @@ const LpListPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const queryClient = useQueryClient();
 
-  const { mutate: addLp } = useMutation({
+  const { mutate: createLp } = useMutation({
     mutationFn: async ({
       title,
       content,
@@ -54,7 +53,7 @@ const LpListPage = () => {
         imageUrl = await uploadImage(thumbnail); // 서버에 이미지 업로드
       }
 
-      return createLp({
+      return createLpApi({
         title,
         content,
         thumbnail: imageUrl,
@@ -80,7 +79,7 @@ const LpListPage = () => {
       {isModalOpen && (
         <AddLpModal
           onClose={() => setIsModalOpen(false)}
-          onSubmit={(data) => addLp(data)}
+          onSubmit={(data) => createLp(data)}
         />
       )}
       <div className="flex justify-end gap-2 mb-2">
