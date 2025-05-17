@@ -1,7 +1,7 @@
 import { axiosInstance } from "./axios";
 import { PaginationDto } from "../types/common";
 
-export const getComments = async ({
+export const getComment = async ({
   lpId,
   cursor,
   order,
@@ -27,7 +27,7 @@ export const postComment = async ({
 };
 
 
-export const editComment = async ({
+export const updateComment = async ({
   lpId,
   commentId,
   content,
@@ -43,7 +43,7 @@ export const editComment = async ({
   return data;
 };
 
-export const deleteCommentById = async ({
+export const deleteComment = async ({
   lpId,
   commentId,
 }: {

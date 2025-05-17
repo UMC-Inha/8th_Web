@@ -2,10 +2,14 @@ import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { getComments } from "../apis/Comments";
 import { CommentSkeleton } from "../components/CommentSkeleton";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { postComment, editComment, deleteCommentById } from "../apis/Comments";
+import {
+  getComment as getCommentApi,
+  postComment as postCommentApi,
+  updateComment as updateCommentApi,
+  deleteComment as deleteCommentApi,
+} from "../apis/comment";
 import { useMe } from "../hooks/useMe";
 
 export const LpCommentsPage = () => {
@@ -20,15 +24,15 @@ export const LpCommentsPage = () => {
   const { user: me } = useMe();
   const currentUserId = me?.id;
 
-  const { mutate: addComment, isPending: isPosting } = useMutation({
-    mutationFn: postComment,
+  const { mutate: postComment, isPending: isPosting } = useMutation({
+    mutationFn: postCommentApi,
     onSuccess: () => {
       setContent("");
       queryClient.invalidateQueries({ queryKey: ["lp-comments", lpId] });
     },
   });
   const { mutate: updateComment } = useMutation({
-    mutationFn: editComment,
+    mutationFn: updateCommentApi,
     onSuccess: () => {
       setEditingId(null);
       queryClient.invalidateQueries({ queryKey: ["lp-comments", lpId] });
@@ -36,7 +40,7 @@ export const LpCommentsPage = () => {
   });
 
   const { mutate: deleteComment } = useMutation({
-    mutationFn: deleteCommentById,
+    mutationFn: deleteCommentApi,
     onSuccess: () => {
       setOpenMenuId(null);
       queryClient.invalidateQueries({ queryKey: ["lp-comments", lpId] });
@@ -47,7 +51,7 @@ export const LpCommentsPage = () => {
     useInfiniteQuery({
       queryKey: ["lp-comments", lpId, order],
       queryFn: ({ pageParam = 0 }) =>
-        getComments({ lpId: Number(lpId), cursor: pageParam, order }),
+        getCommentApi({ lpId: Number(lpId), cursor: pageParam, order }),
       initialPageParam: 0,
       getNextPageParam: (lastPage) =>
         lastPage.data.hasNext ? lastPage.data.nextCursor : undefined,
@@ -98,7 +102,7 @@ export const LpCommentsPage = () => {
         <button
           onClick={() => {
             if (!content.trim()) return;
-            addComment({ lpId: Number(lpId), content });
+            postComment({ lpId: Number(lpId), content });
           }}
           className="text-sm bg-zinc-600 text-white px-3 py-1 rounded hover:bg-zinc-500"
           disabled={!content.trim() || isPosting}
