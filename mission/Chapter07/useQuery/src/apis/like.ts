@@ -1,11 +1,11 @@
 import { axiosInstance } from "./axios.ts";
 
-export const postLike = async (lpId: number) => {
+export const addLike = async (lpId: number) => {
   const { data } = await axiosInstance.post(`/v1/lps/${lpId}/likes`);
   return data;
 };
 
-export const deleteLike = async (lpId: number) => {
+export const removeLike = async (lpId: number) => {
   const { data } = await axiosInstance.delete(`/v1/lps/${lpId}/likes`);
   return data;
 };
