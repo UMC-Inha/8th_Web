@@ -1,0 +1,19 @@
+import { Outlet } from "react-router-dom";
+import Navbar from "../components/Navbar";
+import Sidebar from "../components/Sidebar";
+
+const RootLayout = () => {
+  return (
+    <div className="flex">
+      <Sidebar />
+      <div className="flex-1">
+        <Navbar />
+        <main className="p-0">
+          <Outlet />
+        </main>
+      </div>
+    </div>
+  );
+};
+
+export default RootLayout;
