@@ -78,8 +78,22 @@ const CommentBlock = ({
               </button>
               {menuOpen && (
                 <div className="comment-menu-options">
-                  <button onClick={() => setIsEditing(true)}>수정</button>
-                  <button onClick={handleDelete}>삭제</button>
+                  <button
+                    onClick={() => {
+                      setIsEditing(true);
+                      setMenuOpen(false);
+                    }}
+                  >
+                    수정
+                  </button>
+                  <button
+                    onClick={() => {
+                      setMenuOpen(false);
+                      handleDelete();
+                    }}
+                  >
+                    삭제
+                  </button>
                 </div>
               )}
             </div>

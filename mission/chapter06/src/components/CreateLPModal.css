@@ -49,6 +49,13 @@
   border: none;
   padding: 8px;
   border-radius: 6px;
+  font-family: inherit;
+}
+
+.lp-modal textarea {
+  height: 100px;
+  resize: none;
+  overflow-y: auto;
 }
 
 .tag-input {
@@ -64,6 +71,7 @@
 
 .tag-chip {
   background-color: #555;
+  color: white;
   padding: 4px 8px;
   border-radius: 12px;
   font-size: 12px;

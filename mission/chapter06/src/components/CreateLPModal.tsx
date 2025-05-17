@@ -20,16 +20,22 @@ const CreateLPModal = ({ onClose }: Props) => {
     fileInputRef.current?.click();
   };
 
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        if (typeof reader.result === "string") {
-          setThumbnail(reader.result);
-        }
-      };
-      reader.readAsDataURL(file);
+    if (!file) return;
+
+    const formData = new FormData();
+    formData.append("file", file);
+
+    try {
+      const res = await axiosInstance.post("/v1/uploads", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+      const imageUrl = res.data.data.imageUrl;
+      setThumbnail(imageUrl);
+    } catch (err) {
+      console.error("이미지 업로드 실패", err);
+      alert("이미지 업로드 실패");
     }
   };
 
@@ -53,10 +59,9 @@ const CreateLPModal = ({ onClose }: Props) => {
       thumbnail: string;
       tags: string[];
       published: boolean;
-    } // mutation에 넘기는 인자
+    }
   >({
-    mutationFn: (newLP) =>
-      axiosInstance.post("http://localhost:8000/v1/lps", newLP),
+    mutationFn: (newLP) => axiosInstance.post("/v1/lps", newLP),
     onSuccess: () => {
       alert("등록 성공!");
       onClose();
