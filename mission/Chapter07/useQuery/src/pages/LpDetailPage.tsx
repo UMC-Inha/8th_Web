@@ -9,7 +9,10 @@ import { updateLp, deleteLp } from "../apis/lp";
 import { UpdateLpModal } from "../components/UpdateLpMdal";
 import { useState } from "react";
 import { ResponseMyInfoDto } from "../types/auth";
-import { addLike, removeLike } from "../apis/like";
+import {
+  postLike as postLikeApi,
+  deleteLike as deleteLikeApi,
+} from "../apis/like";
 
 const LpDetailPage = () => {
   const { lpId } = useParams();
@@ -43,7 +46,7 @@ const LpDetailPage = () => {
 
   const { mutate: toggleLike } = useMutation({
     mutationFn: () =>
-      hasLiked ? removeLike(Number(lpId)) : addLike(Number(lpId)),
+      hasLiked ? deleteLikeApi(Number(lpId)) : postLikeApi(Number(lpId)),
     onMutate: async () => {
       await queryClient.cancelQueries({ queryKey: ["lpDetail", lpId] });
       const previous = queryClient.getQueryData<{ data: Lp }>([
