@@ -5,10 +5,10 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import { CommentSkeleton } from "../components/CommentSkeleton";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
-  getComment as getCommentApi,
-  postComment as postCommentApi,
-  updateComment as updateCommentApi,
-  deleteComment as deleteCommentApi,
+  getComments as getCommentsApi,
+  createComment as createCommentApi,
+  updateCommentById as updateCommentByIdApi,
+  deleteCommentById as deleteCommentByIdApi,
 } from "../apis/comment";
 import { useMe } from "../hooks/useMe";
 
@@ -25,14 +25,14 @@ export const LpCommentsPage = () => {
   const currentUserId = me?.id;
 
   const { mutate: postComment, isPending: isPosting } = useMutation({
-    mutationFn: postCommentApi,
+    mutationFn: createCommentApi,
     onSuccess: () => {
       setContent("");
       queryClient.invalidateQueries({ queryKey: ["lp-comments", lpId] });
     },
   });
   const { mutate: updateComment } = useMutation({
-    mutationFn: updateCommentApi,
+    mutationFn: updateCommentByIdApi,
     onSuccess: () => {
       setEditingId(null);
       queryClient.invalidateQueries({ queryKey: ["lp-comments", lpId] });
@@ -40,7 +40,7 @@ export const LpCommentsPage = () => {
   });
 
   const { mutate: deleteComment } = useMutation({
-    mutationFn: deleteCommentApi,
+    mutationFn: deleteCommentByIdApi,
     onSuccess: () => {
       setOpenMenuId(null);
       queryClient.invalidateQueries({ queryKey: ["lp-comments", lpId] });
@@ -51,7 +51,7 @@ export const LpCommentsPage = () => {
     useInfiniteQuery({
       queryKey: ["lp-comments", lpId, order],
       queryFn: ({ pageParam = 0 }) =>
-        getCommentApi({ lpId: Number(lpId), cursor: pageParam, order }),
+        getCommentsApi({ lpId: Number(lpId), cursor: pageParam, order }),
       initialPageParam: 0,
       getNextPageParam: (lastPage) =>
         lastPage.data.hasNext ? lastPage.data.nextCursor : undefined,
