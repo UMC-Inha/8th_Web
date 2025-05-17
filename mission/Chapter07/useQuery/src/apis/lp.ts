@@ -3,7 +3,7 @@ import { axiosInstance } from "./axios.ts";
 import { Lp, ResponseLpListDto } from "../types/lp.ts";
 import { uploadImage } from "./upload.ts";
 
-export const getLpList = async (
+export const getLps = async (
     paginationDto: PaginationDto,
   ): Promise<ResponseLpListDto> => {
     const { data } = await axiosInstance.get("/v1/lps", {
@@ -12,7 +12,7 @@ export const getLpList = async (
     return data;
 };
 
-export const getLpDetail = async (lpId: number): Promise<Lp> => {
+export const getLpById = async (lpId: number): Promise<Lp> => {
   const { data } = await axiosInstance.get(`/v1/lps/${lpId}`);
   return data;
 };
@@ -55,7 +55,7 @@ export const createLp = async (form: {
   return data;
 };
 
-export const updateLp = async (
+export const updateLpById = async (
   lpId: number,
   form: {
     title: string;
@@ -71,7 +71,7 @@ export const updateLp = async (
 };
 
 
-export const deleteLp = async (lpId: number) => {
+export const deleteLpById = async (lpId: number) => {
   const { data } = await axiosInstance.delete(`/v1/lps/${lpId}`);
   return data;
 };
