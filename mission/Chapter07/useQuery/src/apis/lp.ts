@@ -76,7 +76,4 @@ export const deleteLp = async (lpId: number) => {
   return data;
 };
 
-export const LikeLp = async (lpId: number) => {
-  const { data } = await axiosInstance.post(`/v1/lps/${lpId}/likes`);
-  return data;
-};
+

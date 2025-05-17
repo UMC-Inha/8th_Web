@@ -2,7 +2,9 @@ import { useNavigate, NavLink } from "react-router-dom";
 import { postSignout } from "../apis/auth";
 import { logout } from "../utils/auth";
 import { useState } from "react";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { ResponseMyInfoDto } from "../types/auth";
+import { getMyInfo } from "../apis/auth";
 
 const Navbar = () => {
   const [showLogout, setShowLogout] = useState(false);
@@ -11,7 +13,12 @@ const Navbar = () => {
 
   const navigate = useNavigate();
   const token = localStorage.getItem("accessToken");
-  const name = localStorage.getItem("name");
+  const { data } = useQuery<ResponseMyInfoDto>({
+    queryKey: ["me"],
+    queryFn: getMyInfo,
+    enabled: !!token,
+  });
+  const name = data?.data.name;
 
   const { mutate: handleLogout } = useMutation({
     mutationFn: postSignout,

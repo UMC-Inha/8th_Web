@@ -15,14 +15,35 @@ const Mypage = () => {
 
   const { mutate: updateProfile } = useMutation({
     mutationFn: updateMyInfo,
-    onSuccess: async () => {
-      queryClient.invalidateQueries({ queryKey: ["me"] });
-      try {
-        const res = await getMyInfo();
-        setUser(res.data);
-      } catch (err) {
-        console.error("프로필 갱신 실패", err);
+    onMutate: async (newData) => {
+      await queryClient.cancelQueries({ queryKey: ["me"] });
+
+      const previousData = queryClient.getQueryData<ResponseMyInfoDto>(["me"]);
+
+      if (!previousData) return;
+
+      queryClient.setQueryData(["me"], {
+        ...previousData,
+        data: {
+          ...previousData.data,
+          name: newData.name,
+          bio: newData.bio,
+          avatar: newData.avatar ?? previousData.data.avatar,
+        },
+      });
+
+      localStorage.setItem("name", newData.name);
+
+      return { previousData };
+    },
+    onError: (_err, _newData, context) => {
+      if (context?.previousData) {
+        queryClient.setQueryData(["me"], context.previousData);
       }
+      alert("프로필 갱신 실패");
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ["me"] });
       alert("수정 완료!");
     },
   });

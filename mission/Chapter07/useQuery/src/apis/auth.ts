@@ -7,6 +7,7 @@ import {
   ResponseMyInfoDto,
 } from "../types/auth";
 import { axiosInstance } from "./axios";
+import { uploadImage } from "./upload";
 
 const publicAxios = axios.create({
   baseURL: import.meta.env.VITE_SERVER_API_URL,
@@ -48,15 +49,15 @@ export const updateMyInfo = async ({
   bio?: string;
   avatar?: File;
 }) => {
-  const formData = new FormData();
-  formData.append("name", name);
-  if (bio) formData.append("bio", bio);
-  if (avatar) formData.append("avatar", avatar);
-
-  return axiosInstance.patch("/v1/users", formData, {
-    headers: {
-      "Content-Type": "multipart/form-data",
-    },
+  let avatarUrl: string | undefined;
+    if (avatar instanceof File) {
+    const res = await uploadImage(avatar);
+    avatarUrl = res;
+  }
+  return axiosInstance.patch("/v1/users", {
+    name,
+    bio,
+    avatar: avatarUrl, 
   });
 };
 

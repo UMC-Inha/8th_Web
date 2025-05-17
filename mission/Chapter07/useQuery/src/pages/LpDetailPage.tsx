@@ -5,15 +5,19 @@ import { Lp } from "../types/lp";
 import { ArrowLeft } from "lucide-react";
 import { LpCommentsPage } from "./LpCommentsPage";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { updateLp, deleteLp, LikeLp } from "../apis/lp";
+import { updateLp, deleteLp } from "../apis/lp";
 import { UpdateLpModal } from "../components/UpdateLpMdal";
 import { useState } from "react";
+import { ResponseMyInfoDto } from "../types/auth";
+import { addLike, removeLike } from "../apis/like";
 
 const LpDetailPage = () => {
   const { lpId } = useParams();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const me = queryClient.getQueryData<ResponseMyInfoDto>(["me"]);
+  const myUserId = me?.data.id;
 
   const { mutate: handleDelete } = useMutation({
     mutationFn: () => deleteLp(Number(lpId)),
@@ -23,14 +27,6 @@ const LpDetailPage = () => {
     },
   });
 
-  const { mutate: handleLike } = useMutation({
-    mutationFn: () => LikeLp(Number(lpId)),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["lpDetail", lpId] });
-      queryClient.invalidateQueries({ queryKey: ["lps"] });
-      alert("좋아요 완료!");
-    },
-  });
   const { mutate: handleUpdate } = useMutation({
     mutationFn: (form: {
       title: string;
@@ -45,6 +41,46 @@ const LpDetailPage = () => {
     },
   });
 
+  const { mutate: toggleLike } = useMutation({
+    mutationFn: () =>
+      hasLiked ? removeLike(Number(lpId)) : addLike(Number(lpId)),
+    onMutate: async () => {
+      await queryClient.cancelQueries({ queryKey: ["lpDetail", lpId] });
+      const previous = queryClient.getQueryData<{ data: Lp }>([
+        "lpDetail",
+        lpId,
+      ]);
+      if (!previous || !myUserId) return;
+
+      const alreadyLiked = previous.data.likes.some(
+        (l) => l.userId === myUserId
+      );
+
+      const newLikes = alreadyLiked
+        ? previous.data.likes.filter((l) => l.userId !== myUserId)
+        : [...previous.data.likes, { userId: myUserId, id: Date.now() }];
+
+      queryClient.setQueryData(["lpDetail", lpId], {
+        ...previous,
+        data: {
+          ...previous.data,
+          likes: newLikes,
+        },
+      });
+
+      return { previous };
+    },
+    onError: (_err, _vars, context) => {
+      if (context?.previous) {
+        queryClient.setQueryData(["lpDetail", lpId], context.previous);
+      }
+      alert("좋아요 실패");
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ["lpDetail", lpId] });
+    },
+  });
+
   const { data, isPending, isError } = useQuery({
     queryKey: ["lpDetail", lpId],
     queryFn: () => getLpDetail(Number(lpId)),
@@ -55,6 +91,7 @@ const LpDetailPage = () => {
   if (isError || !data) return <p>데이터를 불러오는 데 실패했습니다.</p>;
 
   const lp: Lp = data.data;
+  const hasLiked = lp.likes.some((l) => l.userId === myUserId);
 
   return (
     <div className="max-w-2xl mx-auto p-6 text-white">
@@ -111,10 +148,10 @@ const LpDetailPage = () => {
             삭제
           </button>
           <button
-            onClick={() => handleLike()}
+            onClick={() => toggleLike()}
             className="border px-4 py-2 rounded"
           >
-            ❤️ 좋아요
+            {hasLiked ? "💔 좋아요 취소" : "❤️ 좋아요"}
           </button>
         </div>
 
