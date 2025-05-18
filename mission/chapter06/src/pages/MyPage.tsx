@@ -36,6 +36,28 @@ const MyPage = () => {
     (formData: { name: string; bio: string | null; avatar: string | null }) =>
       axiosInstance.patch("/v1/users", formData),
     {
+      onMutate: async (newData) => {
+        await queryClient.cancelQueries("userProfile");
+        const previousData =
+          queryClient.getQueryData<UserProfile>("userProfile");
+
+        queryClient.setQueryData<UserProfile>("userProfile", (old) => ({
+          ...(old || {}),
+          name: newData.name,
+          bio: newData.bio,
+          avatar: newData.avatar,
+        }));
+
+        localStorage.setItem("name", newData.name);
+
+        return { previousData };
+      },
+      onError: (_err, _newData, context) => {
+        if (context?.previousData) {
+          queryClient.setQueryData("userProfile", context.previousData);
+          localStorage.setItem("name", context.previousData.name);
+        }
+      },
       onSuccess: () => {
         queryClient.invalidateQueries("userProfile");
         setIsEditing(false);

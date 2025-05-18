@@ -1,12 +1,21 @@
 import { useNavigate } from "react-router-dom";
-import "./Navbar.css";
-import { useMutation } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import axiosInstance from "../utils/axiosInstance";
+import "./Navbar.css";
+
+const fetchUserProfile = async () => {
+  const res = await axiosInstance.get("/v1/users/me");
+  return res.data.data;
+};
 
 const Navbar = ({ onMenuClick }: { onMenuClick: () => void }) => {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const isLoggedIn = !!localStorage.getItem("accessToken");
-  const nickname = localStorage.getItem("name") || "사용자";
+
+  const { data: userProfile } = useQuery("userProfile", fetchUserProfile, {
+    enabled: isLoggedIn,
+  });
 
   const logoutMutation = useMutation(
     async () => {
@@ -27,6 +36,8 @@ const Navbar = ({ onMenuClick }: { onMenuClick: () => void }) => {
       localStorage.removeItem("refreshToken");
       localStorage.removeItem("userId");
       localStorage.removeItem("name");
+
+      queryClient.removeQueries("userProfile");
     },
     {
       onSuccess: () => {
@@ -42,6 +53,8 @@ const Navbar = ({ onMenuClick }: { onMenuClick: () => void }) => {
   const handleLogout = () => {
     logoutMutation.mutate();
   };
+
+  const nickname = userProfile?.name || "사용자";
 
   return (
     <header className="navbar">
