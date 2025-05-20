@@ -1,4 +1,4 @@
-import axios from "axios";
+import axiosInstance from "./axiosInstance";
 
 export const logout = async (): Promise<boolean> => {
   try {
@@ -6,7 +6,7 @@ export const logout = async (): Promise<boolean> => {
 
     if (!accessToken) throw new Error("accessToken 없음");
 
-    await axios.post(
+    await axiosInstance.post(
       "http://localhost:8000/v1/auth/signout",
       {},
       {

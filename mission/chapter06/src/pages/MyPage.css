@@ -1,0 +1,130 @@
+.mypage-container {
+  max-width: 400px;
+  margin: 100px auto;
+  padding: 20px;
+  background-color: #1e1e1e;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+  text-align: center;
+  color: white;
+}
+
+.mypage-avatar {
+  width: 120px;
+  height: 120px;
+  margin: 0 auto 20px;
+  border-radius: 50%;
+  overflow: hidden;
+  background-color: #333;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: relative;
+}
+
+.mypage-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.mypage-avatar-placeholder {
+  color: #888;
+  font-size: 14px;
+}
+
+.mypage-avatar-overlay {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  font-size: 12px;
+  padding: 4px 0;
+}
+
+.mypage-reset-avatar {
+  background: #666;
+  color: white;
+  font-size: 12px;
+  padding: 4px 8px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-top: -16px;
+  margin-bottom: 16px;
+}
+
+.mypage-info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+}
+
+.mypage-name,
+.mypage-email {
+  font-size: 16px;
+  color: #ccc;
+}
+
+.mypage-bio {
+  font-size: 16px;
+  color: grey;
+}
+
+.mypage-name input,
+.mypage-bio input {
+  background-color: #2a2a2a;
+  border: none;
+  border-radius: 6px;
+  color: white;
+  padding: 6px 10px;
+  font-size: 14px;
+  width: 100%;
+}
+
+.mypage-edit-button {
+  background-color: #444;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.mypage-edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+}
+
+.mypage-edit-form input[type="text"] {
+  background-color: #2a2a2a;
+  border: none;
+  color: white;
+  padding: 6px 10px;
+  border-radius: 6px;
+  width: 100%;
+  max-width: 300px;
+}
+
+.mypage-edit-form button {
+  background-color: hotpink;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.mypage-loading,
+.mypage-error {
+  text-align: center;
+  color: #aaa;
+  margin-top: 100px;
+  font-size: 16px;
+}

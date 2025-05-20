@@ -114,6 +114,10 @@
   text-align: center;
 }
 
+.lp-likes:hover {
+  cursor: pointer;
+}
+
 .lp-comments-container {
   margin-top: 40px;
   background-color: #1f1f1f;
@@ -170,4 +174,95 @@
   border-radius: 6px;
   padding: 8px 16px;
   cursor: pointer;
+}
+
+.lp-edit-input,
+.lp-edit-textarea {
+  background-color: #2a2a2a;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-size: 14px;
+  width: 100%;
+  font-family: inherit;
+}
+
+.lp-edit-textarea {
+  resize: none;
+  height: 120px;
+  line-height: 1.5;
+}
+
+.lp-edit-thumbnail {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 50%;
+  cursor: pointer;
+  margin: 16px auto;
+  display: block;
+}
+
+.lp-edit-tag {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 12px;
+}
+
+.lp-edit-tag span {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background-color: #444;
+  padding: 4px 8px;
+  border-radius: 10px;
+  font-size: 12px;
+  color: white;
+}
+
+.lp-edit-tag-remove {
+  font-size: 12px;
+  color: #f88;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.lp-edit-tag-row {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+  align-items: center;
+}
+
+.lp-edit-tag-row input {
+  flex: 1;
+}
+
+.lp-edit-tag-row button {
+  padding: 8px 16px;
+  background-color: #555;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  height: 40px;
+  line-height: 1;
+}
+
+.lp-edit-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.lp-edit-buttons button {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
 }
