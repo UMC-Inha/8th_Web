@@ -39,3 +39,20 @@ export type ResponseMyInfoDto = CommonResponse<{
     createdAt: Date
     updatedAt: Date
 }>
+
+export interface ResponseDeleteUserDto {
+    status: boolean;
+    message: string;
+    statusCode: number;
+    data: {
+        id: number;
+        name: string;
+        email: string;
+        bio: string | null;
+        avatar: string | null;
+        password: string;
+        hashedRefreshToken: string;
+        createdAt: string;
+        updatedAt: string;
+    };
+}

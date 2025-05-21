@@ -46,18 +46,49 @@ export type LpCommentDto = {
     createdAt: string;
     updatedAt: string;
     author: {
-      id: number;
-      name: string;
-      email: string;
-      bio: string | null;
-      avatar: string | null;
-      createdAt: string;
-      updatedAt: string;
+        id: number;
+        name: string;
+        email: string;
+        bio: string | null;
+        avatar: string | null;
+        createdAt: string;
+        updatedAt: string;
     };
-  };
-  
-  export interface CommentsCursorResponse {
+};
+
+export interface CommentsCursorResponse {
     data: LpCommentDto[];
     nextCursor: number;
     hasNext: boolean;
+}
+
+export interface RequestCreateLpDto {
+    title: string;
+    content: string;
+    thumbnail: string;
+    tags: string[];
+    published: boolean;
+}
+
+export interface ResponseCreateLpWrapper {
+    status: boolean;
+    message: string;
+    statusCode: number;
+    data: {
+        id: number;
+        title: string;
+        content: string;
+        thumbnail: string;
+        published: boolean;
+        authorId: number;
+        createdAt: string;
+        updatedAt: string;
+    };
+}
+
+export interface ResponseEditCommentWrapper {
+    status: boolean;
+    message: string;
+    statusCode: number;
+    data: LpCommentDto;
   }

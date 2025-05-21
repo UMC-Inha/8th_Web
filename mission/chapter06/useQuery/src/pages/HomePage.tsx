@@ -4,15 +4,21 @@ import { useAuth } from "../context/AuthContext";
 import useGetInfiniteLpList from "../hooks/queries/useGetInfiniteLpList";
 import { PAGINATION_ORDER } from "../enums/common";
 import { useInView } from "react-intersection-observer";
+
 import LpCard from "../components/LpCard/LpCard";
 import LpCardSkeletonList from "../components/LpCard/LpCardSkeletonList";
+import Modal from "../components/Modal";
+import LpModal from "../components/LpModal/LpModal";
 
-const HomePage = () => {
+export default function HomePage() {
   const { accessToken } = useAuth();
   const navigate = useNavigate();
 
   const [search, setSearch] = useState("");
-  const [order, setOrder] = useState<PAGINATION_ORDER>(PAGINATION_ORDER.desc);
+  const [order, setOrder] = useState<PAGINATION_ORDER>(
+    PAGINATION_ORDER.desc
+  );
+  const [isLpModalOpen, setIsLpModalOpen] = useState(false);
 
   const {
     data: lps,
@@ -33,7 +39,9 @@ const HomePage = () => {
 
   const handleCardClick = (id: string) => {
     if (!accessToken) {
-      if (window.confirm("로그인이 필요한 서비스입니다.\n로그인하시겠습니까?")) {
+      if (
+        window.confirm("로그인이 필요한 서비스입니다.\n로그인하시겠습니까?")
+      ) {
         navigate("/login");
       }
     } else {
@@ -44,7 +52,7 @@ const HomePage = () => {
   if (isError) return <div className="mt-20">Error...</div>;
 
   return (
-    <div className="container mx-auto px-4 py-6">
+    <div className="relative container mx-auto px-4 py-6">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 space-y-2 sm:space-y-0">
         <input
           value={search}
@@ -56,8 +64,8 @@ const HomePage = () => {
           <button
             onClick={() => setOrder(PAGINATION_ORDER.desc)}
             className={`px-4 py-2 border rounded ${order === PAGINATION_ORDER.desc
-              ? "bg-blue-500 text-white"
-              : "bg-white text-gray-700"
+                ? "bg-blue-500 text-white"
+                : "bg-white text-gray-700"
               }`}
           >
             최신순
@@ -65,8 +73,8 @@ const HomePage = () => {
           <button
             onClick={() => setOrder(PAGINATION_ORDER.asc)}
             className={`px-4 py-2 border rounded ${order === PAGINATION_ORDER.asc
-              ? "bg-blue-500 text-white"
-              : "bg-white text-gray-700"
+                ? "bg-blue-500 text-white"
+                : "bg-white text-gray-700"
               }`}
           >
             오래된순
@@ -74,11 +82,25 @@ const HomePage = () => {
         </div>
       </div>
 
+      <button
+        onClick={() => setIsLpModalOpen(true)}
+        className="fixed bottom-8 right-8 bg-green-500 text-white w-12 h-12 rounded-full flex items-center justify-center shadow-lg hover:bg-green-600 z-30"
+      >
+        +
+      </button>
+
+      <Modal
+        isOpen={isLpModalOpen}
+        onClose={() => setIsLpModalOpen(false)}
+      >
+        <LpModal onClose={() => setIsLpModalOpen(false)} />
+      </Modal>
+
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {isPending && <LpCardSkeletonList count={20} />}
 
-        {lps?.pages
-          .map((page) => page.data.data)
+        {lps
+          ?.pages.map((page) => page.data.data)
           .flat()
           .map((lp) => (
             <div
@@ -96,6 +118,4 @@ const HomePage = () => {
       <div ref={ref} className="h-2" />
     </div>
   );
-};
-
-export default HomePage;
+}

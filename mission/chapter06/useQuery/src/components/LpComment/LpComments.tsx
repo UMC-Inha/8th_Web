@@ -1,7 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, FormEvent } from "react";
 import { useInView } from "react-intersection-observer";
 import { FaUser } from "react-icons/fa";
+import { useAuth } from "../../context/AuthContext";
 import { useGetInfiniteLpComments } from "../../hooks/queries/useGetInfiniteLpComments";
+import { usePostLpComment } from "../../hooks/mutations/usePostLpComment";
+import { useEditLpComment } from "../../hooks/mutations/useEditLpComment";
+import { useDeleteLpComment } from "../../hooks/mutations/useDeleteLpComment";
 import LpCommentSkeleton from "./LpCommentSkeleton";
 
 interface LpCommentsProps {
@@ -9,22 +13,30 @@ interface LpCommentsProps {
   limit?: number;
 }
 
-const LpComments = ({ lpId, limit }: LpCommentsProps) => {
+export default function LpComments({ lpId, limit = 5 }: LpCommentsProps) {
+  const { user } = useAuth();
   const [order, setOrder] = useState<"desc" | "asc">("desc");
+  const [newComment, setNewComment] = useState("");
+  const [editingId, setEditingId] = useState<number | null>(null);
+  const [editingContent, setEditingContent] = useState("");
 
   const {
     data,
-    isLoading,
+    isPending,
     isError,
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
   } = useGetInfiniteLpComments(lpId, limit, order);
 
-  // 화면 하단 탐지용
-  const { ref, inView } = useInView({ threshold: 0 });
+  const { mutate: postComment, isPending: isPosting } =
+    usePostLpComment(lpId);
+  const { mutate: editComment, isLoading: isEditing } =
+    useEditLpComment(lpId);
+  const { mutate: deleteComment, isLoading: isDeleting } =
+    useDeleteLpComment(lpId);
 
-  // inView 감지되면 다음 페이지 자동 로드
+  const { ref, inView } = useInView({ threshold: 0 });
   useEffect(() => {
     if (inView && hasNextPage && !isFetchingNextPage) {
       fetchNextPage();
@@ -33,37 +45,90 @@ const LpComments = ({ lpId, limit }: LpCommentsProps) => {
 
   const comments = data?.pages.flatMap((p) => p.data) ?? [];
 
+  // 새 댓글 등록
+  const handleNewSubmit = (e: FormEvent) => {
+    e.preventDefault();
+    const txt = newComment.trim();
+    if (!txt) return;
+    postComment(
+      { content: txt },
+      { onSuccess: () => setNewComment("") }
+    );
+  };
+
+  // 수정 시작 / 취소 / 저장
+  const startEdit = (id: number, content: string) => {
+    setEditingId(id);
+    setEditingContent(content);
+  };
+  const cancelEdit = () => {
+    setEditingId(null);
+    setEditingContent("");
+  };
+  const handleEditSubmit = (e: FormEvent) => {
+    e.preventDefault();
+    if (editingId == null || !editingContent.trim()) return;
+    editComment(
+      { commentId: editingId, content: editingContent.trim() },
+      { onSuccess: () => cancelEdit() }
+    );
+  };
+
+  // 댓글 삭제
+  const handleDelete = (commentId: number) => {
+    if (window.confirm("정말 이 댓글을 삭제하시겠습니까?")) {
+      deleteComment(commentId);
+    }
+  };
+
   return (
-    <div className="border-t pt-6">
-      {/* 정렬 버튼 */}
+    <div className="border-t pt-6 space-y-6">
+      {/* 새 댓글 폼 */}
+      <form onSubmit={handleNewSubmit} className="space-y-2">
+        <textarea
+          value={newComment}
+          onChange={(e) => setNewComment(e.target.value)}
+          rows={2}
+          placeholder="댓글을 입력하세요..."
+          className="w-full border rounded px-3 py-2 resize-none"
+        />
+        <button
+          type="submit"
+          disabled={isPosting}
+          className={`px-4 py-2 rounded text-white ${isPosting ? "bg-gray-400" : "bg-blue-500 hover:bg-blue-600"
+            }`}
+        >
+          {isPosting ? "등록 중..." : "댓글 작성"}
+        </button>
+      </form>
+
+      {/* 정렬 */}
       <div className="flex justify-between items-center mb-4">
-        <h2 className="text-xl font-semibold">댓글</h2>
+        <h2 className="text-xl font-semibold">댓글 ({comments.length})</h2>
         <div className="space-x-2">
           <button
             onClick={() => setOrder("desc")}
-            className={`px-3 py-1 border rounded ${
-              order === "desc"
+            className={`px-3 py-1 border rounded ${order === "desc"
                 ? "bg-blue-500 text-white"
                 : "bg-white text-gray-700"
-            }`}
+              }`}
           >
             최신순
           </button>
           <button
             onClick={() => setOrder("asc")}
-            className={`px-3 py-1 border rounded ${
-              order === "asc"
+            className={`px-3 py-1 border rounded ${order === "asc"
                 ? "bg-blue-500 text-white"
                 : "bg-white text-gray-700"
-            }`}
+              }`}
           >
             오래된순
           </button>
         </div>
       </div>
 
-      {/* 초기 로딩 스켈레톤 */}
-      {isLoading ? (
+      {/* 댓글 리스트 */}
+      {isPending ? (
         <div className="space-y-4">
           {Array.from({ length: limit }).map((_, idx) => (
             <LpCommentSkeleton key={idx} />
@@ -73,11 +138,10 @@ const LpComments = ({ lpId, limit }: LpCommentsProps) => {
         <p>댓글을 불러오는 중 오류가 발생했습니다.</p>
       ) : comments.length > 0 ? (
         <>
-          {/* 댓글 리스트 */}
           <ul className="space-y-4">
             {comments.map((c) => (
               <li key={c.id} className="p-4 border rounded">
-                <div className="flex justify-between items-center mb-2">
+                <div className="flex justify-between items-start mb-2">
                   <div className="flex items-center">
                     {c.author.avatar ? (
                       <img
@@ -92,23 +156,69 @@ const LpComments = ({ lpId, limit }: LpCommentsProps) => {
                       {c.author.name}
                     </span>
                   </div>
-                  <span className="text-sm text-gray-500">
-                    {new Date(c.createdAt).toLocaleString("ko-KR")}
-                  </span>
+
+                  {/* 본인 댓글에만 수정/삭제 버튼 */}
+                  {user?.id === c.authorId && editingId !== c.id && (
+                    <div className="space-x-2">
+                      <button
+                        onClick={() => startEdit(c.id, c.content)}
+                        className="text-sm text-blue-500 hover:underline"
+                      >
+                        수정
+                      </button>
+                      <button
+                        onClick={() => handleDelete(c.id)}
+                        disabled={isDeleting}
+                        className="text-sm text-red-500 hover:underline"
+                      >
+                        {isDeleting ? "삭제 중..." : "삭제"}
+                      </button>
+                    </div>
+                  )}
                 </div>
-                <p>{c.content}</p>
+
+                {/* 수정 모드 */}
+                {editingId === c.id ? (
+                  <form onSubmit={handleEditSubmit} className="space-y-2">
+                    <textarea
+                      value={editingContent}
+                      onChange={(e) => setEditingContent(e.target.value)}
+                      rows={2}
+                      className="w-full border rounded px-3 py-2 resize-none"
+                    />
+                    <div className="flex space-x-2">
+                      <button
+                        type="button"
+                        onClick={cancelEdit}
+                        className="px-3 py-1 border rounded text-gray-700"
+                      >
+                        취소
+                      </button>
+                      <button
+                        type="submit"
+                        disabled={isEditing}
+                        className={`px-3 py-1 rounded text-white ${isEditing
+                            ? "bg-gray-400"
+                            : "bg-green-500 hover:bg-green-600"
+                          }`}
+                      >
+                        {isEditing ? "저장 중..." : "저장"}
+                      </button>
+                    </div>
+                  </form>
+                ) : (
+                  <p>{c.content}</p>
+                )}
               </li>
             ))}
           </ul>
 
-          {/* 무한 스크롤 센티널 */}
-          <div ref={ref} className="h-2"></div>
+          <div ref={ref} className="h-2" />
 
-          {/* 추가 로딩 스켈레톤 */}
           {isFetchingNextPage && (
             <div className="space-y-4 mt-4">
               {Array.from({ length: limit }).map((_, idx) => (
-                <LpCommentSkeleton key={`loading-${idx}`} />
+                <LpCommentSkeleton key={idx} />
               ))}
             </div>
           )}
@@ -118,6 +228,4 @@ const LpComments = ({ lpId, limit }: LpCommentsProps) => {
       )}
     </div>
   );
-};
-
-export default LpComments;
+}
