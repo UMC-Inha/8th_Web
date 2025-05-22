@@ -16,6 +16,7 @@ import { Lp } from "../types/lp";
 import { AddLpModal } from "../components/AddLpModal";
 import { uploadImage } from "../apis/upload";
 import useDebounce from "../hooks/useDebounce";
+import useThrottle from "../hooks/useThrottle";
 
 const LpListPage = () => {
   const [order, setOrder] = useState<"asc" | "desc">("desc");
@@ -40,7 +41,6 @@ const LpListPage = () => {
     });
 
   const { ref, inView } = useInView();
-
   const [isModalOpen, setIsModalOpen] = useState(false);
   const queryClient = useQueryClient();
 
@@ -75,9 +75,15 @@ const LpListPage = () => {
     },
   });
 
-  useEffect(() => {
-    if (inView && hasNextPage && !isFetchingNextPage && !isPending) {
+  const throttledFetchNext = useThrottle(() => {
+    if (hasNextPage && !isFetchingNextPage && !isPending) {
       fetchNextPage();
+    }
+  }, 3000);
+
+  useEffect(() => {
+    if (inView) {
+      throttledFetchNext();
     }
   }, [inView, hasNextPage, fetchNextPage, isPending, isFetchingNextPage]);
 
