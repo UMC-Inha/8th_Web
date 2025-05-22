@@ -41,7 +41,7 @@ const Sidebar = ({
       >
         <div className="sidebar-title">DOLIGO</div>
         <nav className="sidebar-nav">
-          <Link to="/" onClick={onClose} className="sidebar-link">
+          <Link to="/search" onClick={onClose} className="sidebar-link">
             🔍 찾기
           </Link>
           <Link to="/mypage" onClick={onClose} className="sidebar-link">
