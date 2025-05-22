@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useInView } from 'react-intersection-observer';
-import { Lp } from '../types/lp';
 import useGetInfiniteLpList from '../hooks/queries/useGetInfiniteLpList';
 import { PAGINATION_ORDER } from '../enums/common';
 import LpCardSkeletonList from '../components/LpCard/LpCardSkeletonList';
@@ -35,10 +34,17 @@ const LpPage = () => {
         setIsModalOpen(false); 
     };
 
-    if (isPending) return <LpCardSkeletonList count={300} />;
-    if (isError) return <div className="mt-20 text-center">조회된 LP가 없습니다.</div>;
+    if (isPending || isFetching) return <LpCardSkeletonList count={300} />;
+    if (isError) {
+        return (
+            <div className="mt-20 text-center">
+                조회된 LP가 없습니다.
+                <p>{"문제가 발생했습니다. 다시 시도해주세요."}</p>
+            </div>
+        );
+    }
 
-    const lpList = data?.pages.flatMap((page) => page.data.data) || [];
+    const lpList = data?.pages?.flatMap((page) => page.data?.data) || [];
 
     return (
         <div className="flex flex-col h-dvh bg-white items-center text-black">
@@ -75,14 +81,12 @@ const LpPage = () => {
                         <div className="absolute inset-0 bg-black bg-opacity-60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
                             <h3 className="text-white text-lg font-semibold">{lp.title}</h3>
                             <p className="text-gray-300 text-sm">
-                                {new Date(lp.createdAt).toLocaleDateString()} · 좋아요 {lp.likes.length}
+                                {new Date(lp.createdAt).toLocaleDateString()} · 좋아요 {lp.likes.length || []}
                             </p>
                         </div>
                     </li>
                 ))}
             </ul>
-
-            {isFetching && <LpCardSkeletonList count={300} />}
 
             <div ref={ref} className="h-4" />
 

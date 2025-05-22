@@ -10,9 +10,9 @@ import ProtectedLayout from './layouts/ProtectedLayout';
 import GoogleLoginRedirectPage from './pages/GoogleLoginRedirectPage';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import LpPage from './pages/LpPage';
 import HomePage from './pages/HomePage';
 import LpDetailPage from './pages/LpDetailPage';
+import LpPage from './pages/LpPage';
 
 const publicRoutes : RouteObject[] = [
   {
