@@ -59,6 +59,22 @@ export const postLp = async (
   };
 };
 
+export const editLp = async (
+  lpId: number,
+  body: RequestCreateLpDto
+): Promise<Lp> => {
+  const unique = Array.from(new Set(body.tags ?? []));
+  const { data } = await axiosInstance.patch<{ data: Lp }>(
+    `/v1/lps/${lpId}`,
+    { ...body, tags: unique }
+  );
+  return {
+    ...data.data,
+    createdAt: new Date(data.data.createdAt),
+    updatedAt: new Date(data.data.updatedAt),
+  };
+};
+
 export const postLpComment = async (
   lpId: number,
   body: { content: string }
@@ -105,4 +121,8 @@ export const removeLike = async (lpId: number): Promise<Likes> => {
     `/v1/lps/${lpId}/likes`
   );
   return data.data;
+};
+
+export const deleteLp = async (lpId: number): Promise<void> => {
+  await axiosInstance.delete(`/v1/lps/${lpId}`);
 };
