@@ -1,13 +1,14 @@
 import { useState, useRef, useEffect } from "react";
 import { useInfiniteQuery } from "react-query";
-import axios from "axios";
+import axiosInstance from "../utils/axiosInstance";
 import LPCard from "../components/LpCard";
 import SkeletonCard from "../components/SkeletonCard";
+import useThrottleCallback from "../hooks/useThrottleCallback";
 import "./LPListPage.css";
 
 const fetchLPs = async ({ pageParam = 0, queryKey }: any) => {
   const [, order] = queryKey;
-  const res = await axios.get("http://localhost:8000/v1/lps", {
+  const res = await axiosInstance.get("/v1/lps", {
     params: {
       cursor: pageParam,
       limit: 20,
@@ -30,24 +31,50 @@ const LPListPage = () => {
 
   const observerRef = useRef<HTMLDivElement | null>(null);
 
+  const [scrollY, setScrollY] = useState(0);
+  const lastLogTimeRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrollY(window.scrollY);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const throttledFetchNextPage = useThrottleCallback(() => {
+    const now = Date.now();
+    const diff = lastLogTimeRef.current ? now - lastLogTimeRef.current : null;
+
+    if (diff !== null) {
+      console.log(
+        `fetchNextPage 호출 | 스크롤 위치: ${scrollY}px | 간격: ${diff}ms`
+      );
+    } else {
+      console.log(`fetchNextPage 최초 호출 | 스크롤 위치: ${scrollY}px`);
+    }
+
+    lastLogTimeRef.current = now;
+    fetchNextPage();
+  }, 500); //ms 단위
+
   useEffect(() => {
     if (!observerRef.current || !hasNextPage) return;
 
     const observer = new IntersectionObserver(
       (entries) => {
         if (entries[0].isIntersecting) {
-          fetchNextPage();
+          throttledFetchNextPage();
         }
       },
       { threshold: 1 }
     );
 
     observer.observe(observerRef.current);
-
     return () => {
       if (observerRef.current) observer.unobserve(observerRef.current);
     };
-  }, [observerRef, hasNextPage, fetchNextPage]);
+  }, [observerRef, hasNextPage, throttledFetchNextPage]);
 
   const allLPs = data?.pages.flatMap((page) => page.data) ?? [];
 

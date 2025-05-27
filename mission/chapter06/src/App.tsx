@@ -12,6 +12,7 @@ import SignupEmail from "./pages/SignupEmail";
 import SignupPassword from "./pages/SignupPassword";
 import SignupProfile from "./pages/SignupProfile";
 import LPListPageWithModal from "./pages/LPListPageWithModal";
+import SearchPage from "./pages/SearchPage";
 
 const queryClient = new QueryClient();
 
@@ -41,6 +42,7 @@ function App() {
             <Route path="password" element={<SignupPassword />} />
             <Route path="profile" element={<SignupProfile />} />
           </Route>
+          <Route path="/search" element={<SearchPage />} />
         </Routes>
       </Router>
 
