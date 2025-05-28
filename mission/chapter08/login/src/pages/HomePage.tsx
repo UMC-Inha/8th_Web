@@ -4,13 +4,12 @@ import { useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import LpCard from "../components/LpCard/LpCard";
 import LpCardSkeletonList from "../components/LpCard/LpCardSkeletonList";
-// import useDebounce from "../hooks/useDebounce";
+import useDebounce from "../hooks/useDebounce";
 import useThrottle from "../hooks/useThrottle";
 
 const HomePage = () => {
   const [search, setSearch] = useState("");
-  // const debouncedValue = useDebounce(search, 500);
-  const throttledValue = useThrottle(search, 1000);
+  const debouncedValue = useDebounce(search, 500);
 
   const {
     data: lps,
@@ -19,7 +18,13 @@ const HomePage = () => {
     isPending,
     fetchNextPage,
     isError,
-  } = useGetInfiniteLpList(10, throttledValue, PAGINATION_ORDER.desc);
+  } = useGetInfiniteLpList(10, debouncedValue, PAGINATION_ORDER.desc);
+
+  const throttleScroll = useThrottle(() => {
+    if (!isFetching && hasNextPage) {
+      fetchNextPage();
+    }
+  }, 1000);
 
   const { ref, inView } = useInView({
     threshold: 0,
@@ -27,7 +32,7 @@ const HomePage = () => {
 
   useEffect(() => {
     if (inView) {
-      !isFetching && hasNextPage && fetchNextPage();
+      throttleScroll();
     }
   }, [inView, isFetching, hasNextPage, fetchNextPage]);
 
@@ -41,7 +46,7 @@ const HomePage = () => {
         className="border p-4 rounded-sm"
         placeholder="검색어를 입력하세요"
         value={search}
-        onChange={(e) => setSearch(e.target.value)} 
+        onChange={(e) => setSearch(e.target.value)}
       />
 
       <div
