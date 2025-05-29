@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import useGetInfiniteLpList from "../hooks/queries/useGetInfiniteLpList";
@@ -9,12 +9,16 @@ import LpCard from "../components/LpCard/LpCard";
 import LpCardSkeletonList from "../components/LpCard/LpCardSkeletonList";
 import Modal from "../components/Modal";
 import LpModal from "../components/LpModal/LpModal";
+import useDebounce from "../hooks/useDebounce";
+import useThrottle from "../hooks/useThrottle";
 
 export default function HomePage() {
   const { accessToken } = useAuth();
   const navigate = useNavigate();
 
   const [search, setSearch] = useState("");
+  const debouncedSearch = useDebounce<string>(search, 500);
+
   const [order, setOrder] = useState<PAGINATION_ORDER>(
     PAGINATION_ORDER.desc
   );
@@ -27,15 +31,17 @@ export default function HomePage() {
     isPending,
     fetchNextPage,
     isError,
-  } = useGetInfiniteLpList(5, search, order);
+  } = useGetInfiniteLpList(5, debouncedSearch, order);
 
   const { ref, inView } = useInView({ threshold: 0 });
 
-  useEffect(() => {
-    if (inView && !isFetching && hasNextPage) {
+  const throttledFetch = useCallback(() => {
+    if (inView && hasNextPage && !isFetching) {
       fetchNextPage();
     }
-  }, [inView, isFetching, hasNextPage, fetchNextPage]);
+  }, [inView, hasNextPage, isFetching, fetchNextPage]);
+
+  useThrottle(throttledFetch, 1000);
 
   const handleCardClick = (id: string) => {
     if (!accessToken) {
@@ -64,8 +70,8 @@ export default function HomePage() {
           <button
             onClick={() => setOrder(PAGINATION_ORDER.desc)}
             className={`px-4 py-2 border rounded ${order === PAGINATION_ORDER.desc
-                ? "bg-blue-500 text-white"
-                : "bg-white text-gray-700"
+              ? "bg-blue-500 text-white"
+              : "bg-white text-gray-700"
               }`}
           >
             최신순
@@ -73,8 +79,8 @@ export default function HomePage() {
           <button
             onClick={() => setOrder(PAGINATION_ORDER.asc)}
             className={`px-4 py-2 border rounded ${order === PAGINATION_ORDER.asc
-                ? "bg-blue-500 text-white"
-                : "bg-white text-gray-700"
+              ? "bg-blue-500 text-white"
+              : "bg-white text-gray-700"
               }`}
           >
             오래된순
