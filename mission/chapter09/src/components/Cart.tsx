@@ -1,26 +1,22 @@
-import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "../app/store";
-import {
-  increase,
-  decrease,
-  removeItem,
-  calculateTotals,
-} from "../features/cart/cartSlice";
 import { useEffect } from "react";
-import { openModal } from "../features/modal/modalSlice";
-import Modal from "./Modal";
+import { useCartStore } from "../app/useCartStore";
 import "../styles/cart.css";
 
 const Cart = () => {
-  const dispatch = useDispatch();
-  const { cartItems, totalAmount, totalQuantity } = useSelector(
-    (state: RootState) => state.cart
-  );
-  const { isOpen } = useSelector((state: RootState) => state.modal);
+  const {
+    cartItems,
+    totalAmount,
+    totalQuantity,
+    increase,
+    decrease,
+    removeItem,
+    clearCart,
+    calculateTotals,
+  } = useCartStore();
 
   useEffect(() => {
-    dispatch(calculateTotals());
-  }, [cartItems, dispatch]);
+    calculateTotals();
+  }, [cartItems]);
 
   return (
     <div className="cart">
@@ -42,9 +38,9 @@ const Cart = () => {
             <strong>${item.price}</strong>
           </div>
           <div className="item-actions">
-            <button onClick={() => dispatch(decrease(item.id))}>-</button>
+            <button onClick={() => decrease(item.id)}>-</button>
             <span>{item.amount}</span>
-            <button onClick={() => dispatch(increase(item.id))}>+</button>
+            <button onClick={() => increase(item.id)}>+</button>
           </div>
         </div>
       ))}
@@ -54,11 +50,9 @@ const Cart = () => {
         <p>총 합계: ${totalAmount}</p>
       </div>
 
-      <button className="clear-btn" onClick={() => dispatch(openModal())}>
+      <button className="clear-btn" onClick={clearCart}>
         전체 삭제
       </button>
-
-      {isOpen && <Modal />}
     </div>
   );
 };
