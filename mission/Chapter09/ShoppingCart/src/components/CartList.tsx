@@ -1,7 +1,8 @@
 import CartItem from "./CartItem";
 import { useAppDispatch, useAppSelector } from "../hooks/useCustomRedux";
 import { useEffect } from "react";
-import { calculateTotals, clearCart } from "../slices/cartSlice";
+import { calculateTotals } from "../slices/cartSlice";
+import { openModal } from "../slices/modalSlice";
 
 const CartList = () => {
   const dispatch = useAppDispatch();
@@ -21,7 +22,7 @@ const CartList = () => {
 
       <button
         className="bg-red-500 text-white px-4 py-2 rounded mt-10 mb-4 hover:bg-gray-600"
-        onClick={() => dispatch(clearCart())}
+        onClick={() => dispatch(openModal())}
       >
         전체 삭제
       </button>
