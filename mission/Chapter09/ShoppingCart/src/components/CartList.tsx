@@ -1,16 +1,20 @@
 import CartItem from "./CartItem";
-import { useAppDispatch, useAppSelector } from "../hooks/useCustomRedux";
 import { useEffect } from "react";
-import { calculateTotals } from "../slices/cartSlice";
-import { openModal } from "../slices/modalSlice";
-
+import { useModalStore } from "../hooks/useModalStore";
+import { useCartStore } from "../hooks/useCartStore";
+import initialCartItems from "../constants/cartItems";
 const CartList = () => {
-  const dispatch = useAppDispatch();
-  const cartItems = useAppSelector((state) => state.cart.cartItems);
+  const cartItems = useCartStore((state) => state.cartItems);
+  const calculateTotals = useCartStore((state) => state.calculateTotals);
+  const setInitialItems = useCartStore((state) => state.setInitialItems);
+  const openModal = useModalStore((state) => state.openModal);
 
   useEffect(() => {
-    dispatch(calculateTotals());
-  }, [cartItems, dispatch]);
+    setInitialItems(initialCartItems);
+  }, []);
+  useEffect(() => {
+    calculateTotals();
+  }, [cartItems, calculateTotals]);
 
   return (
     <div className="flex flex-col items-center justify-center">
@@ -22,7 +26,7 @@ const CartList = () => {
 
       <button
         className="bg-red-500 text-white px-4 py-2 rounded mt-10 mb-4 hover:bg-gray-600"
-        onClick={() => dispatch(openModal())}
+        onClick={() => openModal()}
       >
         전체 삭제
       </button>

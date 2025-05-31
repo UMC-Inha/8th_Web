@@ -1,8 +1,8 @@
 import { FaShoppingCart } from "react-icons/fa";
-import { useAppSelector } from "../hooks/useCustomRedux";
+import { useCartStore } from "../hooks/useCartStore";
 
 const Navbar = () => {
-  const { amount } = useAppSelector((state) => state.cart);
+  const amount = useCartStore((state) => state.amount);
   return (
     <div className="flex justify-between items-center p-4 bg-blue-500 text-white">
       <h1 className="text-2xl font-semibold">Thunder</h1>

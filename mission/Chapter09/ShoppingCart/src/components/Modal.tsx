@@ -1,10 +1,10 @@
-import { useAppDispatch, useAppSelector } from "../hooks/useCustomRedux";
-import { closeModal } from "../slices/modalSlice";
-import { clearCart } from "../slices/cartSlice";
+import { useModalStore } from "../hooks/useModalStore";
+import { useCartStore } from "../hooks/useCartStore";
 
 const Modal = () => {
-  const dispatch = useAppDispatch();
-  const isOpen = useAppSelector((state) => state.modal.isOpen);
+  const isOpen = useModalStore((state) => state.isOpen);
+  const closeModal = useModalStore((state) => state.closeModal);
+  const clearCart = useCartStore((state) => state.clearCart);
 
   if (!isOpen) return null;
 
@@ -17,15 +17,17 @@ const Modal = () => {
         <div className="flex justify-end gap-3">
           <button
             onClick={() => {
-              dispatch(clearCart());
-              dispatch(closeModal());
+              clearCart();
+              closeModal();
             }}
             className="px-4 py-2 bg-red-500 text-white rounded hover:bg-gray-600"
           >
             네
           </button>
           <button
-            onClick={() => dispatch(closeModal())}
+            onClick={() => {
+              closeModal();
+            }}
             className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-600"
           >
             아니요
