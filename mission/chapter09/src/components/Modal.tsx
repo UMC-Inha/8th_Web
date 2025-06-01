@@ -1,18 +1,18 @@
-import { useDispatch } from "react-redux";
-import { clearCart } from "../features/cart/cartSlice";
-import { closeModal } from "../features/modal/modalSlice";
+import { useModalStore } from "../app/useModalStore";
+import { useCartStore } from "../app/useCartStore";
 import "./Modal.css";
 
 const Modal = () => {
-  const dispatch = useDispatch();
+  const { closeModal } = useModalStore();
+  const { clearCart } = useCartStore();
 
   const handleConfirm = () => {
-    dispatch(clearCart());
-    dispatch(closeModal());
+    clearCart();
+    closeModal();
   };
 
   const handleCancel = () => {
-    dispatch(closeModal());
+    closeModal();
   };
 
   return (

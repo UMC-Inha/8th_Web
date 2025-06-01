@@ -1,5 +1,7 @@
 import { useEffect } from "react";
 import { useCartStore } from "../app/useCartStore";
+import { useModalStore } from "../app/useModalStore";
+import Modal from "./Modal";
 import "../styles/cart.css";
 
 const Cart = () => {
@@ -10,9 +12,10 @@ const Cart = () => {
     increase,
     decrease,
     removeItem,
-    clearCart,
     calculateTotals,
   } = useCartStore();
+
+  const { isOpen, openModal } = useModalStore();
 
   useEffect(() => {
     calculateTotals();
@@ -50,9 +53,11 @@ const Cart = () => {
         <p>총 합계: ${totalAmount}</p>
       </div>
 
-      <button className="clear-btn" onClick={clearCart}>
+      <button className="clear-btn" onClick={openModal}>
         전체 삭제
       </button>
+
+      {isOpen && <Modal />}
     </div>
   );
 };
