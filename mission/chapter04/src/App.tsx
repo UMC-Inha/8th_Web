@@ -2,8 +2,9 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import RootLayout from "./layout/root-layout";
 import HomePage from "./pages/home";
 import MovieListPage from "./pages/movies";
-import MovieDetailPage from "./pages/movie-detail"; // MovieDetailPage 임포트 추가
+import MovieDetailPage from "./pages/movie-detail";
 import NotFound from "./pages/not-found";
+import SearchPage from "./pages/search";
 
 const router = createBrowserRouter([
   {
@@ -22,6 +23,10 @@ const router = createBrowserRouter([
       {
         path: "movies/:movieId",
         element: <MovieDetailPage />,
+      },
+      {
+        path: "movies/search",
+        element: <SearchPage />,
       },
     ],
   },
