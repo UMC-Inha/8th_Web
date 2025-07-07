@@ -1,9 +1,9 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
-import SignupEmail from "./pages/SignupEmail";
-import SignupPassword from "./pages/SignupPassword";
-import SignupProfile from "./pages/SignupProfile";
+import SignupEmail from "./pages/SignupEmail.tsx";
+import SignupPassword from "./pages/SignupPassword.tsx";
+import SignupProfile from "./pages/SignupProfile.tsx";
 
 function App() {
   return (
